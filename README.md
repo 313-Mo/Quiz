@@ -58,3 +58,10 @@ docker-compose up
 ### Building and Pushing Images
 
 The GitLab CI/CD pipeline will automatically build and push Docker images to the GitLab registry.
+
+### Definition of Done
+
+1. Es sind keine kritischen Bugs offen 
+2. Der Code ist fertiggestellt und ins Remote Repository gepusht worden 
+3. Die Akzeptanzkriterien der User Story sind erfüllt
+4. Ein Code Review wurde durchgeführt
