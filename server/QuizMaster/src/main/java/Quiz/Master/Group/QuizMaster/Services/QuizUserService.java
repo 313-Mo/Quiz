@@ -15,8 +15,20 @@ public class QuizUserService {
       this.userRepository = userRepository;
    }
 
-   public void createUser(String username, String password, String email, int age) {
+   public void createUser(String firstName, String lastName, String username, String password, String email, int age) {
         QuizUser user = new QuizUser();
+        
+        if (userRepository.findByUsername(username) != null) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+        if (age < 10) {
+            throw new IllegalArgumentException("Too Young to Register");
+        }
+        if (age > 100) {
+            throw new IllegalArgumentException("Reached Maximum Age Limit");
+        }
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
@@ -24,5 +36,13 @@ public class QuizUserService {
     
         userRepository.save(user);
    }
+
+   public boolean checkLogin(String username, String password) {
+         QuizUser user = userRepository.findByUsername(username);
+         if (user != null && user.getPassword().equals(password)) {
+            return true;
+         }
+         return false;
+    }
 }
 

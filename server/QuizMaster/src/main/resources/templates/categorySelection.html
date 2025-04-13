@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster – Language Switch</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #fff5e1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cloud-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 65%;
+      background: rgba(106, 75, 198, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom-left-radius: 50% 20%;
+      border-bottom-right-radius: 50% 20%;
+      z-index: 1;
+    }
+
+    h1 {
+      z-index: 2;
+      color: #fdbf35;
+      font-size: 40px;
+      background: #2c2c54;
+      padding: 10px 30px;
+      border-radius: 20px;
+      margin-bottom: 40px;
+      margin-top: 60px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 25px;
+      padding: 0 60px 60px 80px;
+      z-index: 2;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .category-button {
+      color: white;
+      font-size: 20px;
+      padding: 20px;
+      height: 100px;
+      text-align: center;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .category-button:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    .language-switch {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      z-index: 5;
+    }
+
+    .lang-button {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      font-size: 14px;
+      padding: 6px 10px;
+      margin-left: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .lang-button:hover {
+      background: white;
+      color: #2c2c54;
+    }
+  
+    .add-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background-color: #2c2c54;
+      color: #fdbf35;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      z-index: 3;
+    }
+
+    .add-button:hover {
+      background-color: #1e1e40;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="cloud-top"></div>
+
+  <div class="language-switch">
+    <button onclick="switchLang('en')" class="lang-button">EN</button>
+    <button onclick="switchLang('de')" class="lang-button">DE</button>
+  </div>
+
+  <h1 id="main-title">Choose a Category</h1>
+  <div class="categories">
+    <button class="category-button" style="background:#1dd1a1;" data-en="Chemistry" data-de="Chemie">🧪<br>Chemistry</button>
+    <button class="category-button" style="background:#54a0ff;" data-en="Math" data-de="Mathe">➗<br>Math</button>
+    <button class="category-button" style="background:#feca57;" data-en="Geography" data-de="Geographie">🌍<br>Geography</button>
+    <button class="category-button" style="background:#ff6b6b;" data-en="Finance" data-de="Finanzen">💰<br>Finance</button>
+    <button class="category-button" style="background:#a29bfe;" data-en="Random" data-de="Zufällig">🎲<br>Random</button>
+    <button class="category-button" style="background:#81ecec;" data-en="Biology" data-de="Biologie">🧬<br>Biology</button>
+    <button class="category-button" style="background:#ff9ff3;" data-en="Computer Science" data-de="Informatik">🖥️<br>Computer Science</button>
+    <button class="category-button" style="background:#ffbe76;" data-en="History" data-de="Geschichte">📜<br>History</button>
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      const addBtn = document.querySelector(".add-button");
+      if (addBtn) {
+        addBtn.textContent = lang === "en" ? "➕ Add New Quiz" : "➕ Neues Quiz hinzufügen";
+      }
+
+      const title = document.getElementById("main-title");
+      title.textContent = lang === "en" ? "Choose a Category" : "Wähle eine Kategorie";
+
+      const buttons = document.querySelectorAll(".category-button");
+      buttons.forEach(btn => {
+        const label = lang === "en" ? btn.dataset.en : btn.dataset.de;
+        const icon = btn.innerHTML.split("<br>")[0];
+        btn.innerHTML = icon + "<br>" + label;
+      });
+    }
+  </script>
+
+  <button class="add-button">➕ Add New Quiz</button>
+</body>
+
+</html>
