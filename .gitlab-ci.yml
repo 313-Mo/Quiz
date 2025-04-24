@@ -1,51 +1,50 @@
+image: maven:3.9.6-eclipse-temurin-21
+
 services:
   - docker:dind
 
 variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
 stages:
-  - prepare
+  - install
+  - test
   - build
+  - package
   - deploy
+  - clean
 
-gitlab-registry:
-  stage: prepare
-  image: "thlmylab/swakkd:stable"
-  variables:
-    NAMESPACE: mylab-sweii
+install:
+  stage: install
   script:
-    - kubectl delete secret gitlab-registry-secret -n $NAMESPACE || true
-    - |
-      kubectl create secret docker-registry gitlab-registry-secret \
-      --docker-server=$CI_REGISTRY \
-      --docker-username=image-registry \
-      --docker-password=$CI_REGISTRY_TOKEN -n $NAMESPACE
+    - mvn install -DskipTests
 
-.build:
+test:
+  stage: test
+  script:
+    - mvn test
+
+build:
   stage: build
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $IMAGE:$IMAGE_TAG $IMAGE/.
-    - docker push $IMAGE:$IMAGE_TAG
+    - mvn compile
 
-build-client:
-  extends: .build
-  variables:
-    IMAGE: client
-
-build-server:
-  extends: .build
-  variables:
-    IMAGE: server
+package:
+  stage: package
+  script:
+    - mvn package
 
 deploy:
   stage: deploy
-  image: thlmylab/swakkd:stable
   script:
-    - sed -i "s/LAST_DEPLOYED_UNDEFINED/$(date -Iseconds)/g" $CLIENT_DEPLOYMENT_YAML
-    - sed -i "s/LAST_DEPLOYED_UNDEFINED/$(date -Iseconds)/g" $SERVER_DEPLOYMENT_YAML
-    - kubectl apply -f $CLIENT_DEPLOYMENT_YAML
-    - kubectl apply -f $SERVER_DEPLOYMENT_YAML
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG server/
+    - docker push $IMAGE_TAG
+
+clean:
+  stage: clean
+  script:
+    - mvn clean
