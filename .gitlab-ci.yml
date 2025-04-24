@@ -43,6 +43,9 @@ package:
 
 deploy:
   stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
   before_script: []
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
