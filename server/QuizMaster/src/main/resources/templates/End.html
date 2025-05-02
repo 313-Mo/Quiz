@@ -4,61 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz Beendet</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background:linear-gradient(to bottom, #a29bfe, #ff9ff3);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .quiz-end-buttons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .quiz-btn {
-      background-color: #2c2c54;
-      color: #fdbf35;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      border: none;
-      border-radius: 15px;
-      padding: 15px 30px;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: background-color 0.3s ease;
-    }
-
-    .quiz-btn:hover {
-      background-color: #1e1e40;
-    }
-  </style>
+  <link rel="stylesheet" href="../styles/End.css" />
 </head>
 <body>
+<div class="quiz-end-buttons">
+  <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
+  <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
+</div>
 
-  <div class="quiz-end-buttons">
-    <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
-    <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
-  </div>
-
-  <script>
-    function goToHome() {
-      // Passe den Pfad zur Startseite ggf. an
-      window.location.href = "index.html";
-    }
-
-    function restartQuiz() {
-      // Lädt die aktuelle Seite neu
-      window.location.reload();
-    }
-  </script>
-
+<script src="../scripts/End.js"></script>
 </body>
 </html>
