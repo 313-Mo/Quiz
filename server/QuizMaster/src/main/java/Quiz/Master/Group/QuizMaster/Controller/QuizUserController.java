@@ -1,10 +1,13 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
 import Quiz.Master.Group.QuizMaster.Services.QuizUserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+
 
 @Controller
 public class QuizUserController {
@@ -21,11 +24,12 @@ public class QuizUserController {
    }
 
    @PostMapping("/checkSignUp")
-   public String signUp(String firstName, String lastName, String username, String password, String email, int age) {
+   public String signUp(String firstName, String lastName, String username, String password, String email, int age, Model model) {
       try {
          userService.createUser(firstName, lastName, username, password, email, age);
          return "redirect:/logIn"; 
       } catch (IllegalArgumentException e) {
+         model.addAttribute("error", e.getMessage());
          return "signUp"; 
       }
    }

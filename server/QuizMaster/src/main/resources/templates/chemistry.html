@@ -35,6 +35,12 @@
   <button id="next" class="btn-primary hidden">Nächste Frage</button>
 </div>
 
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const quiz = /*[[${quiz}]]*/ {};
+  const questions = /*[[${questions}]]*/ [];
+  /*]]>*/
+</script>
 <script src="../scripts/chemistry.js"></script>
 </body>
 </html>
