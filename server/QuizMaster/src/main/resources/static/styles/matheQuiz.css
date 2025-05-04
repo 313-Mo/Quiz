@@ -1,0 +1,67 @@
+body {
+    font-family: 'Comic Neue', cursive;
+    background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+    color: white;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.quiz-container {
+    background: #ffffffcc;
+    border: 4px dashed #007acc;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    color: #1e3a8a;
+}
+
+.btn-answer {
+    background-color: #e0f3ff;
+    border: 3px solid #000;
+    color: #004e92;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-answer:hover {
+    transform: scale(1.05);
+    background-color: #c2e9fb;
+}
+
+.btn-answer.correct {
+    background-color: #4caf50 !important;
+    color: white !important;
+}
+
+.btn-answer.incorrect {
+    background-color: #f44336 !important;
+    color: white !important;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #1e90ff, #00c6ff);
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+.heart {
+    color: #004e92;
+    font-size: 24px;
+    margin-right: 5px;
+    text-shadow: 1px 1px 1px black;
+}
+
+.heart.lost {
+    color: rgba(255, 255, 255, 0.3);
+}

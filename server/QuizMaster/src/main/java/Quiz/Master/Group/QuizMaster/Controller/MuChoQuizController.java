@@ -69,16 +69,16 @@ public class MuChoQuizController {
     public String showQuiz(@PathVariable Long id, Model model) {
         MuChoQuiz quiz = quizService.findById(id);
         List<Question> questions = quiz.getQuestionList();
-        model.addAttribute("quiz", quiz);
+        //model.addAttribute("quiz", quiz);
         model.addAttribute("questions", questions);
         String category = quiz.getCategory(); 
         switch (category) {
             case "Biology":
-                return "biology"; 
-            case "Math":
-                return "math"; 
+                return "biologieQuiz"; 
+            case "Mathematics":
+                return "matheQuiz"; 
             case "Finance":
-                return "finance"; 
+                return "finanzQuiz"; 
             case "Chemistry":
                 return "chemistry"; 
             case "Geography":
@@ -87,6 +87,8 @@ public class MuChoQuizController {
                 return "history"; 
             case "Computer Science":
                 return "computerScience"; 
+            case "General Knowledge":
+                return "random";
             default:
                 return "categorySelection";
         }

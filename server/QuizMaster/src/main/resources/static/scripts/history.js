@@ -1,16 +1,3 @@
-const questions = [
-    { text: 'Wann begann der Zweite Weltkrieg?', options: ['1933', '1939', '1941', '1945'], correct: 1 },
-    { text: 'Wer war der erste Bundeskanzler der Bundesrepublik Deutschland?', options: ['Helmut Kohl', 'Konrad Adenauer', 'Willy Brandt', 'Ludwig Erhard'], correct: 1 },
-    { text: 'Wann fiel die Berliner Mauer?', options: ['1989', '1990', '1987', '1991'], correct: 0 },
-    { text: 'Was war die Weimarer Republik?', options: ['Ein Königreich', 'Ein Kaiserreich', 'Eine demokratische Republik', 'Ein Bundesstaat'], correct: 2 },
-    { text: 'Wer entdeckte Amerika im Jahr 1492?', options: ['Marco Polo', 'Christoph Kolumbus', 'Ferdinand Magellan', 'James Cook'], correct: 1 },
-    { text: 'Was war der Kalte Krieg?', options: ['Ein tatsächlicher Krieg', 'Ein politischer Konflikt zwischen Ost und West', 'Ein Bürgerkrieg in den USA', 'Ein Konflikt zwischen Deutschland und Frankreich'], correct: 1 },
-    { text: 'Wie hieß das römische Reich in der Spätantike?', options: ['Oströmisches Reich', 'Heiliges Römisches Reich', 'Kaiserreich Rom', 'Byzantinisches Reich'], correct: 3 },
-    { text: 'Wann wurde die DDR gegründet?', options: ['1949', '1945', '1950', '1955'], correct: 0 },
-    { text: 'Wer war Martin Luther?', options: ['Ein König', 'Ein Entdecker', 'Ein Reformator', 'Ein Kanzler'], correct: 2 },
-    { text: 'Was war die Industrielle Revolution?', options: ['Ein politischer Aufstand', 'Ein wissenschaftlicher Durchbruch', 'Eine Phase großer technischer Veränderungen', 'Ein religiöser Wandel'], correct: 2 },
-];
-
 let current = 0, score = 0, time = 30, timer, lives = 3;
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
@@ -22,30 +9,40 @@ const level = document.getElementById('level');
 
 function loadQuestion() {
     const q = questions[current];
-    questionEl.textContent = q.text;
+    questionEl.textContent = q.questionText;
     answersEl.innerHTML = '';
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'btn-answer';
         btn.textContent = opt;
-        btn.onclick = () => selectAnswer(i, btn);
+        btn.onclick = () => checkAnswer(i, btn);
         answersEl.appendChild(btn);
     });
     nextBtn.classList.add('hidden');
     resetTimer();
 }
 
-function selectAnswer(i, btn) {
-    const correct = questions[current].correct;
-    document.querySelectorAll('.btn-answer').forEach((b, index) => {
-        b.disabled = true;
-        if (index === correct) b.classList.add('correct');
-        if (index === i && index !== correct) b.classList.add('incorrect');
+function checkAnswer(index, button) {
+    const correctAnswer = questions[current].correctAnswer;
+    const selectedAnswer = questions[current].options[index];
+    const correctIndex = questions[current].options.indexOf(correctAnswer);
+
+    const buttons = document.querySelectorAll(".btn-answer");
+
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correctIndex) btn.classList.add("correct");
+        if (i === index && i !== correctIndex) btn.classList.add("incorrect");
     });
-    if (i === correct) score++;
-    else loseHeart();
-    clearInterval(timer);
+
     nextBtn.classList.remove('hidden');
+    if (index === correctIndex) {
+        score++;
+    } else {
+        incorrect++;
+        loseHeart();
+    }
+    resetTimer();
 }
 
 function nextQuestion() {

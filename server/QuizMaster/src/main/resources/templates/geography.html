@@ -38,6 +38,12 @@
   <button id="next" class="btn-primary hidden">Nächste Frage</button>
 </div>
 
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  //const quiz = /*[[${quiz}]]*/ {};
+  const questions = /*[[${questions}]]*/ [];
+  /*]]>*/
+</script>
 <script src="../scripts/geography.js"></script>
 </body>
 </html>

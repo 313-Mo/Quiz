@@ -1,16 +1,3 @@
-const questions = [
-    { text: 'Was ist die Hauptstadt von Spanien?', options: ['Madrid', 'Barcelona', 'Sevilla', 'Valencia'], correct: 0 },
-    { text: 'Wie viele Beine hat eine Spinne?', options: ['6', '8', '10', '12'], correct: 1 },
-    { text: 'Wer schrieb "Faust"?', options: ['Goethe', 'Schiller', 'Lessing', 'Kafka'], correct: 0 },
-    { text: 'Wie viele Planeten hat unser Sonnensystem?', options: ['7', '8', '9', '10'], correct: 1 },
-    { text: 'Was ist die Quadratwurzel von 64?', options: ['6', '7', '8', '9'], correct: 2 },
-    { text: 'Welche Farbe ergibt Blau + Gelb?', options: ['Grün', 'Lila', 'Orange', 'Braun'], correct: 0 },
-    { text: 'Wie nennt man ein sechseckiges Vieleck?', options: ['Pentagon', 'Hexagon', 'Oktagon', 'Trapez'], correct: 1 },
-    { text: 'Welches Tier ist das größte Landraubtier?', options: ['Löwe', 'Tiger', 'Eisbär', 'Wolf'], correct: 2 },
-    { text: 'Welche Sprache spricht man in Brasilien?', options: ['Spanisch', 'Portugiesisch', 'Französisch', 'Englisch'], correct: 1 },
-    { text: 'Wie heißt das chemische Symbol für Gold?', options: ['Ag', 'Au', 'Fe', 'Hg'], correct: 1 }
-];
-
 let current = 0, score = 0, time = 30, timer, lives = 3;
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
@@ -22,31 +9,42 @@ const level = document.getElementById('level');
 
 function loadQuestion() {
     const q = questions[current];
-    questionEl.textContent = q.text;
+    questionEl.textContent = q.questionText;
     answersEl.innerHTML = '';
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'btn-answer';
         btn.textContent = opt;
-        btn.onclick = () => selectAnswer(i, btn);
+        btn.onclick = () => checkAnswer(i, btn);
         answersEl.appendChild(btn);
     });
     nextBtn.classList.add('hidden');
     resetTimer();
 }
 
-function selectAnswer(i, btn) {
-    const correct = questions[current].correct;
-    const buttons = document.querySelectorAll('.btn-answer');
-    buttons.forEach((b, index) => {
-        b.disabled = true;
-        if (index === correct) b.classList.add('correct');
-        if (index === i && index !== correct) b.classList.add('incorrect');
+function checkAnswer(index, button) {
+    const correctAnswer = questions[current].correctAnswer;
+    const selectedAnswer = questions[current].options[index];
+    const correctIndex = questions[current].options.indexOf(correctAnswer);
+
+    const buttons = document.querySelectorAll(".btn-answer");
+
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correctIndex) btn.classList.add("correct");
+        if (i === index && i !== correctIndex) btn.classList.add("incorrect");
     });
-    if (i === correct) score++;
-    else loseHeart();
-    clearInterval(timer);
+
     nextBtn.classList.remove('hidden');
+    if (index === correctIndex) {
+        score++;
+    } else {
+        incorrect++;
+        loseHeart();
+    }
+    resetTimer();
+    
+    
 }
 
 function nextQuestion() {

@@ -9,31 +9,40 @@ const level = document.getElementById('level');
 
 function loadQuestion() {
     const q = questions[current];
-    questionEl.textContent = q.text;
+    questionEl.textContent = q.questionText;
     answersEl.innerHTML = '';
     q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'btn-answer';
         btn.textContent = opt;
-        btn.onclick = () => selectAnswer(i, btn);
+        btn.onclick = () => checkAnswer(i, btn);
         answersEl.appendChild(btn);
     });
     nextBtn.classList.add('hidden');
     resetTimer();
 }
 
-function selectAnswer(i, btn) {
-    const correct = questions[current].correct;
-    const buttons = document.querySelectorAll('.btn-answer');
-    buttons.forEach((b, index) => {
-        b.disabled = true;
-        if (index === correct) b.classList.add('correct');
-        if (index === i && index !== correct) b.classList.add('incorrect');
+function checkAnswer(index, button) {
+    const correctAnswer = questions[current].correctAnswer;
+    const selectedAnswer = questions[current].options[index];
+    const correctIndex = questions[current].options.indexOf(correctAnswer);
+
+    const buttons = document.querySelectorAll(".btn-answer");
+
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correctIndex) btn.classList.add("correct");
+        if (i === index && i !== correctIndex) btn.classList.add("incorrect");
     });
-    if (i === correct) score++;
-    else loseHeart();
-    clearInterval(timer);
+
     nextBtn.classList.remove('hidden');
+    if (index === correctIndex) {
+        score++;
+    } else {
+        incorrect++;
+        loseHeart();
+    }
+    resetTimer();
 }
 
 function nextQuestion() {

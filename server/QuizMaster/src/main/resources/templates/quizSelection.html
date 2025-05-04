@@ -10,7 +10,7 @@
 <div class="cloud-top"></div>
 
 
-<h1 id="main-title" th:text="'Quizzes in ' + ${category}">Quizzes in Chemie</h1>
+<h1 id="main-title" th:text="'Quizzes in ' + ${category}"></h1>
 
 <div class="categories">
   <form th:each="quiz : ${quizzes}" th:action="@{'/quiz/' + ${quiz.id}}" method="GET">

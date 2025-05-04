@@ -1,4 +1,5 @@
 let current = 0, score = 0, time = 30, timer, lives = 3;
+
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
 const nextBtn = document.getElementById('next');
@@ -77,10 +78,8 @@ function loseHeart() {
 
 function endQuiz() {
     clearInterval(timer);
-    document.querySelector('.quiz-container').innerHTML = `
-    <h2 class="text-2xl font-bold text-center mb-4">Quiz beendet!</h2>
-    <p class="text-center text-lg">Du hast ${score} von ${questions.length} richtig beantwortet.</p>
-  `;
+    document.querySelector('.quiz-container').innerHTML = `<h2 class='text-2xl font-bold text-center mb-4'>Quiz beendet!</h2>
+    <p class='text-center text-lg'>Du hast ${score} von ${questions.length} richtig beantwortet.</p>`;
 }
 
 nextBtn.onclick = nextQuestion;
