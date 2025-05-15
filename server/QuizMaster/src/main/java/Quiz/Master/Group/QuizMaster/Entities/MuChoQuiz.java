@@ -1,8 +1,8 @@
 package Quiz.Master.Group.QuizMaster.Entities;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 import java.util.List;
-
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;  
 import jakarta.persistence.Id;  
@@ -15,7 +15,7 @@ public class MuChoQuiz {
     private String category;
     private int timeLimit;
     private int numberOfQuestions;
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questionList;
 
     public Long getId() {
