@@ -60,4 +60,5 @@ public class MultipleChoicQuizErstellenController {
         return "redirect:/add-quiz";
  
     }
+    
 }

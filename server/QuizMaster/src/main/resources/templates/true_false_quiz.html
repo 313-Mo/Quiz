@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>True/False Quiz erstellen</title>
-  <link rel="stylesheet" href="../styles/true_false.css" />
+  <link rel="stylesheet" href="../styles/true_false_quiz.css" />
 </head>
 <body>
   <h1>✏️ True/False Quiz erstellen</h1>
 
-  <form onsubmit="handleSubmit(event)">
+<form th:action="@{/add-truefalse-quiz}" method="post" onsubmit="return handleSubmit(event)">
     <label>⏱️ Wähle die Quiz-Zeit:</label>
     <div class="time-buttons">
       <button type="button" onclick="selectTime(this, 5)">5 Min</button>
@@ -22,14 +22,14 @@
     <label>📚 Wähle eine Kategorie:</label>
     <select name="category" required>
       <option value="">Kategorie wählen...</option>
-      <option value="Chemie">🧪 Chemie</option>
-      <option value="Mathe">➗ Mathe</option>
-      <option value="Geographie">🌍 Geographie</option>
-      <option value="Finanz">💰 Finanz</option>
-      <option value="Random">🎲 Random</option>
-      <option value="Biologie">🧬 Biologie</option>
+      <option value="Chemistry">🧪 Chemie</option>
+      <option value="Mathematics">➗ Mathe</option>
+      <option value="Geography">🌍 Geographie</option>
+      <option value="Finance">💰 Finanz</option>
+      <option value="General Knowledge">🎲 Random</option>
+      <option value="Biology">🧬 Biologie</option>
       <option value="Computer Science">🖥️ Computer Science</option>
-      <option value="Geschichte">📜 Geschichte</option>
+      <option value="History">📜 Geschichte</option>
     </select>
 
     <label for="question">❓ Frage:</label>
@@ -45,6 +45,6 @@
     <button type="submit">🎉 Speichern</button>
   </form>
 
-  <script src="../scripts/true_false.js"></script>
+  <script src="../scripts/trueFalseQuiz.js"></script>
 </body>
 </html>
