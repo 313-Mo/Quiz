@@ -1,6 +1,7 @@
 package Quiz.Master.Group.QuizMaster.Entities;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 
 import java.util.List;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ public class MuChoQuiz {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true, nullable = false)
     private String category;
     private int timeLimit;
     private int numberOfQuestions;
