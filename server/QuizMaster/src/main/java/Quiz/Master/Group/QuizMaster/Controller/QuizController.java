@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 
 @Controller
-public class MuChoQuizController {
+public class QuizController {
     @Autowired
     private final MuChoQuizService quizService;
 
-    public MuChoQuizController(MuChoQuizService quizService) {
+    public QuizController(MuChoQuizService quizService) {
         this.quizService = quizService;
+    }
+
+    @GetMapping("/selectQuiz")
+    public String showSelectQuizPage() {
+        return "selectQuiz"; 
     }
 
     @GetMapping("/BiologieQuiz")
