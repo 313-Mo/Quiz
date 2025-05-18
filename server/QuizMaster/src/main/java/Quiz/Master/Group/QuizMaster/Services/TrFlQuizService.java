@@ -1,10 +1,9 @@
+// Service
 package Quiz.Master.Group.QuizMaster.Services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import Quiz.Master.Group.QuizMaster.Entities.TrFlQuiz;
 import Quiz.Master.Group.QuizMaster.Repositories.TrFlQuizRepository;
 
@@ -18,10 +17,11 @@ public class TrFlQuizService {
    }
 
    public TrFlQuiz findById(Long id) {
-      throw new UnsupportedOperationException("Unimplemented method 'findById'");
+      return quizRepository.findById(id)
+             .orElseThrow(() -> new IllegalArgumentException("Quiz mit ID " + id + " nicht gefunden."));
    }
 
-   public List<TrFlQuiz> findByCategory(String name) {
-    throw new UnsupportedOperationException("Unimplemented method 'findByCategory'");
+   public List<TrFlQuiz> findByCategory(String category) {
+      return quizRepository.findByCategory(category);
    }
 }

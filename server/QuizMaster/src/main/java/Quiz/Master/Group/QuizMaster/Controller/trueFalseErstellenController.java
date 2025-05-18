@@ -1,8 +1,7 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
 import java.util.ArrayList;
-
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,16 +31,19 @@ public class trueFalseErstellenController {
             @RequestParam("selectedTime") int selectedTime,
             @RequestParam("question") String questionText,
             @RequestParam("answer") boolean answerValue) {
-    Optional<TrFlQuiz> optionalQuiz = trFlQuizRepository.findByCategory(category);
+        
+        List<TrFlQuiz> quizzes = trFlQuizRepository.findByCategory(category);
 
-TrFlQuiz quiz = optionalQuiz.orElseGet(() -> {
-    TrFlQuiz newQuiz = new TrFlQuiz();
-    newQuiz.setCategory(category);
-    newQuiz.setTimeLimit(selectedTime);
-    newQuiz.setQuestionList(new ArrayList<>());
-    newQuiz.setAnswerList(new ArrayList<>());
-    return newQuiz;
-});
+        TrFlQuiz quiz;
+        if (quizzes.isEmpty()) {
+            quiz = new TrFlQuiz();
+            quiz.setCategory(category);
+            quiz.setTimeLimit(selectedTime);
+            quiz.setQuestionList(new ArrayList<>());
+            quiz.setAnswerList(new ArrayList<>());
+        } else {
+            quiz = quizzes.get(0);
+        }
 
         quiz.getQuestionList().add(questionText);
         quiz.getAnswerList().add(answerValue);
@@ -50,5 +52,4 @@ TrFlQuiz quiz = optionalQuiz.orElseGet(() -> {
         trFlQuizRepository.save(quiz);
         return "redirect:/add-truefalse-quiz";
     }
-
 }

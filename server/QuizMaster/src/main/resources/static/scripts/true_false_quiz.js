@@ -4,12 +4,16 @@ function selectTime(button, minutes) {
   button.classList.add('active');
 }
 
+
 function handleSubmit(event) {
-  event.preventDefault();
   const selectedTime = document.getElementById('selectedTime').value;
+
   if (!selectedTime) {
-    alert("⏳ Bitte wähle eine Quiz-Zeit aus!");
-    return;
+    event.preventDefault(); 
+    alert("⏳ Bitte wähle eine Quiz-Zeit!");
+    return false;
   }
-  alert("🎉 Dein True/False Quiz wurde erfolgreich gespeichert!");
+
+  alert("🎉 Dein Quiz wurde erfolgreich gespeichert!");
+  return true; 
 }
