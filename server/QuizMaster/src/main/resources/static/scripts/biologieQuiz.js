@@ -1,9 +1,8 @@
+import { quizManager } from './Quizmanager.js';
+
 let currentQuestion = 0;
 let score = 0;
 let incorrect = 0;
-let hearts = 3;
-let timeLeft = 120;
-let timer;
 
 const questionText = document.getElementById("question");
 const answersContainer = document.getElementById("answers");
@@ -12,6 +11,9 @@ const timerBar = document.getElementById("timer-bar");
 const heartsContainer = document.getElementById("hearts");
 const resultBox = document.getElementById("result");
 const scoreDisplay = document.getElementById("score");
+
+quizManager.init(heartsContainer, timerBar, 120);
+quizManager.start();
 
 function loadQuestion() {
     const q = questions[currentQuestion];
@@ -29,18 +31,15 @@ function loadQuestion() {
 
 function checkAnswer(index, button) {
     const correctAnswer = questions[currentQuestion].correctAnswer;
-    const selectedAnswer = questions[currentQuestion].options[index];
-    const correctIndex = questions[currentQuestion].options.indexOf(correctAnswer);
-
     const buttons = document.querySelectorAll(".btn-answer");
 
     buttons.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === correctIndex) btn.classList.add("correct");
-        if (i === index && i !== correctIndex) btn.classList.add("incorrect");
+        if (i === questions[currentQuestion].options.indexOf(correctAnswer)) btn.classList.add("correct");
+        if (i === index && i !== questions[currentQuestion].options.indexOf(correctAnswer)) btn.classList.add("incorrect");
     });
 
-    if (index === correctIndex) {
+    if (index === questions[currentQuestion].options.indexOf(correctAnswer)) {
         score++;
     } else {
         incorrect++;
@@ -48,15 +47,8 @@ function checkAnswer(index, button) {
     }
 }
 
-
 function loseHeart() {
-    if (hearts > 0) {
-        hearts--;
-        heartsContainer.children[hearts].classList.add("lost");
-    }
-    if (hearts === 0) {
-        endQuiz();
-    }
+    if (quizManager.loseHeart()) endQuiz();
 }
 
 function nextQuestion() {
@@ -69,18 +61,11 @@ function nextQuestion() {
 }
 
 function startTimer() {
-    timer = setInterval(() => {
-        timeLeft--;
-        timerBar.style.width = (timeLeft / 120) * 100 + "%";
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            endQuiz();
-        }
-    }, 1000);
+    quizManager.start();
 }
 
 function endQuiz() {
-    clearInterval(timer);
+    quizManager.end();
     document.getElementById("question-area").classList.add("hidden");
     nextBtn.classList.add("hidden");
     resultBox.classList.remove("hidden");
@@ -88,6 +73,4 @@ function endQuiz() {
 }
 
 nextBtn.onclick = nextQuestion;
-
 loadQuestion();
-startTimer();

@@ -18,12 +18,10 @@ public class TrFlQuizService {
    }
 
    public TrFlQuiz findById(Long id) {
-      // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'findById'");
    }
 
    public List<TrFlQuiz> findByCategory(String name) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'findByCategory'");
    }
 }

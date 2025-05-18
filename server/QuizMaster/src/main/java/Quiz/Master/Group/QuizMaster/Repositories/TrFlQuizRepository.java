@@ -7,6 +7,6 @@ import Quiz.Master.Group.QuizMaster.Entities.TrFlQuiz;
 import java.util.List;
 import java.util.Optional;
 public interface TrFlQuizRepository extends JpaRepository<TrFlQuiz, Long> {
-    Optional<TrFlQuiz> findByCategory(String category);
+Optional<TrFlQuiz> findByCategory(String category);
 
 }

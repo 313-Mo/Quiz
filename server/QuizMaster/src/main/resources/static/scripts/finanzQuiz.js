@@ -1,12 +1,16 @@
-let current = 0, score = 0, time = 30, timer, lives = 3;
+import { quizManager } from './Quizmanager.js';
 
+let current = 0, score = 0;
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
 const nextBtn = document.getElementById('next');
 const timerBar = document.getElementById('timer-bar');
 const timerText = document.getElementById('timer');
-const hearts = document.querySelectorAll('.heart');
 const level = document.getElementById('level');
+
+// Initialize QuizManager
+quizManager.init(document.getElementById('hearts-container'), timerBar, 30);
+quizManager.start();
 
 function loadQuestion() {
     const q = questions[current];
@@ -20,64 +24,39 @@ function loadQuestion() {
         answersEl.appendChild(btn);
     });
     nextBtn.classList.add('hidden');
-    resetTimer();
 }
 
 function checkAnswer(index, button) {
     const correctAnswer = questions[current].correctAnswer;
-    const selectedAnswer = questions[current].options[index];
-    const correctIndex = questions[current].options.indexOf(correctAnswer);
-
-    const buttons = document.querySelectorAll(".btn-answer");
+    const buttons = document.querySelectorAll('.btn-answer');
 
     buttons.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === correctIndex) btn.classList.add("correct");
-        if (i === index && i !== correctIndex) btn.classList.add("incorrect");
+        if (i === questions[current].options.indexOf(correctAnswer)) btn.classList.add('correct');
+        if (i === index && i !== questions[current].options.indexOf(correctAnswer)) btn.classList.add('incorrect');
     });
 
     nextBtn.classList.remove('hidden');
-    if (index === correctIndex) {
+    if (index === questions[current].options.indexOf(correctAnswer)) {
         score++;
     } else {
-        incorrect++;
         loseHeart();
     }
-    resetTimer();
 }
 
 function nextQuestion() {
     current++;
-    if (current >= questions.length || lives <= 0) return endQuiz();
+    if (current >= questions.length || quizManager.getHearts() <= 0) return endQuiz();
     if (current % 3 === 0) level.textContent = Number(level.textContent) + 1;
     loadQuestion();
 }
 
-function resetTimer() {
-    clearInterval(timer);
-    time = 30;
-    timerText.textContent = time;
-    timerBar.style.width = '100%';
-    timer = setInterval(() => {
-        time--;
-        timerText.textContent = time;
-        timerBar.style.width = `${(time / 30) * 100}%`;
-        if (time <= 0) {
-            clearInterval(timer);
-            loseHeart();
-            nextBtn.classList.remove('hidden');
-        }
-    }, 1000);
-}
-
 function loseHeart() {
-    lives--;
-    if (lives >= 0 && hearts[lives]) hearts[lives].classList.add('lost');
-    if (lives <= 0) endQuiz();
+    if (quizManager.loseHeart()) endQuiz();
 }
 
 function endQuiz() {
-    clearInterval(timer);
+    quizManager.end();
     document.querySelector('.quiz-container').innerHTML = `<h2 class='text-2xl font-bold text-center mb-4'>Quiz beendet!</h2>
     <p class='text-center text-lg'>Du hast ${score} von ${questions.length} richtig beantwortet.</p>`;
 }
