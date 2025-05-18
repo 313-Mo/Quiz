@@ -1,7 +1,5 @@
+/* startPage.css */
 body {
-    margin: 0;
-    background: #fff5e1;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,8 +7,9 @@ body {
     height: 100vh;
     overflow: hidden;
     position: relative;
-}
-
+    padding-bottom: 40px;
+  }
+  
 .purple-top {
     position: absolute;
     top: 0;
@@ -67,15 +66,12 @@ body {
     background-color: #e0a82e;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap');
-
 .letter-tile {
     position: absolute;
     width: 42px;
     height: 42px;
     font-size: 22px;
     font-weight: 600;
-    font-family: 'Baloo 2', cursive;
     color: white;
     display: flex;
     justify-content: center;
@@ -84,14 +80,22 @@ body {
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
     z-index: 3;
 }
-
-@keyframes float {
-    0% { transform: translateY(0) rotate(var(--angle)); }
-    50% { transform: translateY(-6px) rotate(var(--angle)); }
-    100% { transform: translateY(0) rotate(var(--angle)); }
-}
-
-.letter-tile {
-    animation: float 3s ease-in-out infinite;
-    --angle: 0deg;
-}
+.button {
+    background-color: #fdbf35;
+    color: white;
+    font-size: 20px;
+    padding: 12px 32px;
+    margin: 0 auto 30px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+    z-index: 3;
+    max-width: fit-content;
+    display: block;
+  }
+  
+  .button:hover {
+    background-color: #e0a82e;
+  }
