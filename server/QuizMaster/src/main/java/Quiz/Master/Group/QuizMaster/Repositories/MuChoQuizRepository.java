@@ -8,5 +8,6 @@ import Quiz.Master.Group.QuizMaster.Entities.MuChoQuiz;
 
 public interface MuChoQuizRepository extends JpaRepository<MuChoQuiz, Long> {
     List<MuChoQuiz> findByCategory(String category);
+
     Optional<MuChoQuiz> findById(Long id);
 }

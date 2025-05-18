@@ -35,4 +35,8 @@ public class Question {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
 }

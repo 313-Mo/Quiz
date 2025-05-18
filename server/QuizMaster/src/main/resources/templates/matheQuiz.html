@@ -35,20 +35,20 @@
         </div>
       </div>
     </div>
+    
+<div id="question-area">
+  <p class="font-bold text-lg" id="question"></p>
+  <div id="answers" class="grid grid-cols-2 gap-4 my-4"></div>
+</div>
 
-    <div id="question-area">
-      <p class="font-bold text-lg" id="question"></p>
-      <div id="answers" class="grid grid-cols-2 gap-4 my-4"></div>
-    </div>
+<div class="text-center">
+  <button id="next" class="btn-primary">Nächste Frage</button>
+</div>
 
-    <div class="text-center">
-      <button id="next-btn" class="btn-primary">Nächste Frage</button>
-    </div>
-
-    <div id="result" class="hidden text-center mt-6">
-      <h3 class="text-xl font-bold mb-2">🎉 Dein Ergebnis</h3>
-      <p id="score" class="text-lg"></p>
-    </div>
+<div id="result" class="hidden text-center mt-6">
+  <h3 class="text-xl font-bold mb-2">🎉 Dein Ergebnis</h3>
+  <p id="score" class="text-lg"></p>
+</div>
   </div>
 </div>
 
@@ -58,6 +58,7 @@
   const questions = /*[[${questions}]]*/ [];
   /*]]>*/
 </script>
-<script src="../scripts/matheQuiz.js"></script>
+<script type="module" src="../scripts/Quizmanager.js"></script>
+<script type="module" src="../scripts/matheQuiz.js"></script>
 </body>
 </html>
