@@ -1,7 +1,5 @@
 body {
-    margin: 0;
     background: linear-gradient(to bottom, #a29bfe, #ff9ff3);
-    font-family: 'Baloo 2', cursive;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,33 +37,11 @@ h1 {
 }
 
 input {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 15px;
     margin: 10px 0;
-    font-size: 16px;
-    width: 250px;
-    background: #f0f0f0;
 }
 
 button {
     margin-top: 20px;
     background-color: #fdbf35;
     color: white;
-    font-size: 18px;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
-button:hover {
-    background-color: #e0a82e;
-}
-
-.signup-btn {
-    margin-top: 10px;
-    background: #ff9ff3;
-}
-
