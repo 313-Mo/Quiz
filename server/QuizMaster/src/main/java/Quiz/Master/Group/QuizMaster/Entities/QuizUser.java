@@ -16,46 +16,40 @@ public class QuizUser {
     private String email;
     private int age;
     
-    public Long getId() {
-        return id;
+    protected QuizUser() {
+        this.firstName = null;
+        this.lastName = null;
+        this.username = null;
+        this.password = null;
+        this.email = null;
+        this.age = 0;
     }
-    public void setId(Long id) {
-        this.id = id;
+
+    public QuizUser(String firstName, String lastName, String username, String password, String email, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.age = age;
     }
+
     public String getUsername() {
         return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
     public String getEmail() {
         return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public int getAge() {
         return age;
     }
-    public void setAge(int age) {
-        this.age = age;
-    }
     public String getFirstName() {
         return firstName;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
     public String getLastName() {
         return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 }

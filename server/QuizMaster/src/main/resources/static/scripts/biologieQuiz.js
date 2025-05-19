@@ -27,6 +27,7 @@ function loadQuestion() {
         btn.onclick = () => checkAnswer(i, btn);
         answersContainer.appendChild(btn);
     });
+    nextBtn.classList.add('hidden');
 }
 
 function checkAnswer(index, button) {
@@ -39,6 +40,7 @@ function checkAnswer(index, button) {
         if (i === index && i !== questions[currentQuestion].options.indexOf(correctAnswer)) btn.classList.add("incorrect");
     });
 
+    nextBtn.classList.remove('hidden');
     if (index === questions[currentQuestion].options.indexOf(correctAnswer)) {
         score++;
     } else {

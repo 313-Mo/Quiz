@@ -16,7 +16,7 @@ public class QuizUserService {
    }
 
    public void createUser(String firstName, String lastName, String username, String password, String email, int age) {
-        QuizUser user = new QuizUser();
+        QuizUser user = new QuizUser(firstName, lastName, username, password, email, age);
         
         if (userRepository.findByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
@@ -27,13 +27,7 @@ public class QuizUserService {
         if (age > 100) {
             throw new IllegalArgumentException("Reached Maximum Age Limit");
         }
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setAge(age);
-    
+
         userRepository.save(user);
    }
 

@@ -1,8 +1,10 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
-import Quiz.Master.Group.QuizMaster.Entities.MuChoQuiz;
+import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
-import Quiz.Master.Group.QuizMaster.Services.MuChoQuizService;
+import Quiz.Master.Group.QuizMaster.Entities.Quiz;
+import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
+import Quiz.Master.Group.QuizMaster.Services.QuizService;
 
 import java.util.List;
 
@@ -15,10 +17,15 @@ import org.springframework.ui.Model;
 @Controller
 public class QuizController {
     @Autowired
-    private final MuChoQuizService quizService;
+    private final QuizService quizService;
 
-    public QuizController(MuChoQuizService quizService) {
+    public QuizController(QuizService quizService) {
         this.quizService = quizService;
+    }
+
+    @GetMapping("/shareQuiz")
+    public String showShareQuizPage() {
+        return "shareQuiz"; 
     }
 
     @GetMapping("/selectQuiz")
@@ -63,7 +70,7 @@ public class QuizController {
 
     @GetMapping("/category/{name}")
     public String showQuizzesByCategory(@PathVariable String name, Model model) {
-        List<MuChoQuiz> quizzes = quizService.findByCategory(name);
+        List<Quiz> quizzes = quizService.findByCategory(name);
         model.addAttribute("category", name);
         model.addAttribute("quizzes", quizzes);
         return "quizSelection";
@@ -71,10 +78,18 @@ public class QuizController {
 
     @GetMapping("/quiz/{id}")
     public String showQuiz(@PathVariable Long id, Model model) {
-        MuChoQuiz quiz = quizService.findById(id);
-        List<Question> questions = quiz.getQuestionList();
-        //model.addAttribute("quiz", quiz);
-        model.addAttribute("questions", questions);
+        Quiz quiz = quizService.findById(id);
+        if (quiz instanceof MultipleChoiceQuiz) {
+            MultipleChoiceQuiz muChoQuiz = (MultipleChoiceQuiz) quiz;
+            List<Question> questions = muChoQuiz.getQuestionList();
+            model.addAttribute("questions", questions);
+        }
+        else if (quiz instanceof TrueFalseQuiz) {
+            TrueFalseQuiz tfQuiz = (TrueFalseQuiz) quiz;
+            List<String> questions = tfQuiz.getQuestionList();
+            model.addAttribute("questions", questions);
+        }
+        
         String category = quiz.getCategory(); 
         switch (category) {
             case "Biology":

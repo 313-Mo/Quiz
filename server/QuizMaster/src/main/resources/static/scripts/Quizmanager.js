@@ -57,6 +57,18 @@ class QuizManager {
     end() {
         clearInterval(this.timer);
     }
+
+    goToHome() {
+        window.location.href = "/categorySelection";
+    }
+
+    restartQuiz() {
+        window.location.reload();
+    }
+
 }
 
 export const quizManager = new QuizManager();
+
+window.goToHome = () => quizManager.goToHome();
+window.restartQuiz = () => quizManager.restartQuiz();

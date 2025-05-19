@@ -1,30 +1,35 @@
 package Quiz.Master.Group.QuizMaster.Services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Quiz.Master.Group.QuizMaster.Entities.MuChoQuiz;
-import Quiz.Master.Group.QuizMaster.Repositories.MuChoQuizRepository;
+import Quiz.Master.Group.QuizMaster.Entities.Quiz;
+import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
 
 @Service
-public class MuChoQuizService {
-   private final MuChoQuizRepository quizRepository;
+public class QuizService {
+   private final QuizRepository quizRepository;
    private final QuestionRepository questionRepository;
 
    @Autowired
-   public MuChoQuizService(MuChoQuizRepository quizRepository, QuestionRepository questionRepository) {
+   public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
       this.quizRepository = quizRepository;
       this.questionRepository = questionRepository;
    }
 
-   public List<MuChoQuiz> findByCategory(String category) {
+   public List<Quiz> findByCategory(String category) {
       return quizRepository.findByCategory(category);
    }
-   public MuChoQuiz findById(Long id) {
+
+   public Quiz findById(Long id) {
       return quizRepository.findById(id).orElse(null);
    }
+
+   public void save(Quiz quiz) {
+        quizRepository.save(quiz);
+    }
+
 }

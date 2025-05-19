@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import Quiz.Master.Group.QuizMaster.Entities.TrFlQuiz;
-import Quiz.Master.Group.QuizMaster.Repositories.TrFlQuizRepository;
+import Quiz.Master.Group.QuizMaster.Entities.Quiz;
+import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
+import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
 @Controller
 public class trueFalseErstellenController {
 
     @Autowired
-    private TrFlQuizRepository trFlQuizRepository;
+    private QuizRepository trFlQuizRepository;
 
     @GetMapping("/add-truefalse-quiz")
     public String showTrueFalseQuizForm(Model model) {
-        model.addAttribute("quiz", new TrFlQuiz());
+        model.addAttribute("quiz", new TrueFalseQuiz());
         return "true_false_quiz";
     }
 
@@ -32,23 +33,30 @@ public class trueFalseErstellenController {
             @RequestParam("question") String questionText,
             @RequestParam("answer") boolean answerValue) {
         
-        List<TrFlQuiz> quizzes = trFlQuizRepository.findByCategory(category);
+        //Hier fehlt die Logik für die Speicherung mehrerer Fragen in einem Quiz
+        /* 
+        List<Quiz> quizzes = trFlQuizRepository.findByCategory(category);
 
-        TrFlQuiz quiz;
+        TrueFalseQuiz quiz;
         if (quizzes.isEmpty()) {
-            quiz = new TrFlQuiz();
-            quiz.setCategory(category);
-            quiz.setTimeLimit(selectedTime);
-            quiz.setQuestionList(new ArrayList<>());
-            quiz.setAnswerList(new ArrayList<>());
+            quiz = new TrueFalseQuiz(category, selectedTime, 1, new ArrayList<>(), new ArrayList<>());
         } else {
-            quiz = quizzes.get(0);
+            quiz = (TrueFalseQuiz) quizzes.get(0);
         }
 
         quiz.getQuestionList().add(questionText);
         quiz.getAnswerList().add(answerValue);
         quiz.setNumberOfQuestions(quiz.getQuestionList().size());
+        */
 
+        // Für jede erstellte Frage wird, im Moment, ein neues Quiz erstellt
+        List<String> questionList = new ArrayList<>();
+        questionList.add(questionText);
+
+        List<Boolean> answersList = new ArrayList<>();
+        answersList.add(answerValue);
+
+        TrueFalseQuiz quiz = new TrueFalseQuiz(category, selectedTime, 1, questionList, answersList);
         trFlQuizRepository.save(quiz);
         return "redirect:/add-truefalse-quiz";
     }

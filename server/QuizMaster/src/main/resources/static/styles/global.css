@@ -203,6 +203,7 @@ a {
 }
 
 .add-button {
+    display: block;
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -222,3 +223,4 @@ a {
 .add-button:hover {
     background-color: #1e1e40;
 }
+
