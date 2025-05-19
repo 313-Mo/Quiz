@@ -50,3 +50,9 @@ Herausforderungen: die Thymeleaf-Variablen an die JavaScript-Dateien übergeben.
 ### Reflection Team Member 5: Mohammad
 
 n diesem Sprint habe ich versucht, HTML, CSS und JavaScript zu trennen. Außerdem habe ich mich mit dem Controller „QuizErstellen“ auseinandergesetzt und versucht, ihn fertigzustellen. Da ich der Gruppe jedoch erst spät beigetreten bin, konnte ich den Controller leider nicht vollständig fertigstellen.
+
+
+# Report for 19.05.2025
+### Reflection Team Member 1: Mohammad
+In diesem Sprint konnte ich meine Tickets gut umsetzen. Die Kommunikation mit meinem Team war sehr hilfreich, insbesondere beim Austausch über offene Fragen und Lösungsansätze. Während der Bearbeitung einiger Tickets ist mir aufgefallen, dass teilweise noch Dateien oder Informationen fehlen. Diese könnten in zukünftigen Sprints als eigene Tickets erfasst werden. Außerdem habe ich gemerkt, dass es sinnvoll wäre, größere Tickets in kleinere, übersichtlichere Teilaufgaben zu unterteilen. So behält man den Überblick besser und kann gezielter auf die einzelnen Anforderungen eingehen.
+
