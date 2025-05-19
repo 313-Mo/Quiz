@@ -6,7 +6,7 @@ let incorrect = 0;
 
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
-const nextBtn = document.getElementById('next');
+const nextBtn = document.getElementById('nextBtn');
 const timerBar = document.getElementById('timer-bar');
 const heartsContainer = document.getElementById('hearts');
 const resultBox = document.getElementById('result');

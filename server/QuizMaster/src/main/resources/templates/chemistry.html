@@ -33,7 +33,11 @@
     <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
   </div>
   <div id="answers"></div>
-  <button id="next" class="btn-primary hidden">Nächste Frage</button>
+  <div class="text-center">
+      <button id="nextBtn" class="btn-primary">Nächste Frage</button>
+      <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
+      <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
+    </div>
 </div>
 
 <script th:inline="javascript">

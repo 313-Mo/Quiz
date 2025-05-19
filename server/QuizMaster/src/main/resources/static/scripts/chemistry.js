@@ -3,7 +3,7 @@ import { quizManager } from './Quizmanager.js';
 let current = 0, score = 0;
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
-const nextBtn = document.getElementById('next');
+const nextBtn = document.getElementById('nextBtn');
 const timerBar = document.getElementById('timer-bar');
 const timerText = document.getElementById('timer');
 const level = document.getElementById('level');
