@@ -1,78 +1,95 @@
 import { quizManager } from './Quizmanager.js';
 
-let currentQuestion = 0;
+let current = 0;
 let score = 0;
-let incorrect = 0;
 
-const questionText = document.getElementById("question");
-const answersContainer = document.getElementById("answers");
-const nextBtn = document.getElementById("next-btn");
-const timerBar = document.getElementById("timer-bar");
-const heartsContainer = document.getElementById("hearts");
-const resultBox = document.getElementById("result");
-const scoreDisplay = document.getElementById("score");
+const questionEl = document.getElementById('question');
+const answersEl = document.getElementById('answers');
+const nextBtn = document.getElementById('nextBtn');
+const level = document.getElementById('level');
+const timerBar = document.getElementById('timer-bar');
 
-quizManager.init(heartsContainer, timerBar, 120);
+quizManager.init(document.getElementById('hearts'), timerBar, 30);
 quizManager.start();
 
-function loadQuestion() {
-    const q = questions[currentQuestion];
-    questionText.textContent = q.questionText;
-    answersContainer.innerHTML = "";
-
-    q.options.forEach((ans, i) => {
-        const btn = document.createElement("button");
-        btn.textContent = ans;
-        btn.className = "btn-answer";
-        btn.onclick = () => checkAnswer(i, btn);
-        answersContainer.appendChild(btn);
-    });
+// Zeigt eine Frage basierend auf Fragetyp
+function renderQuestion() {
+    const q = questions[current];
+    questionEl.textContent = q.text || q.questionText || '❓ Ungültige Frage!';
+    answersEl.innerHTML = '';
     nextBtn.classList.add('hidden');
-}
 
-function checkAnswer(index, button) {
-    const correctAnswer = questions[currentQuestion].correctAnswer;
-    const buttons = document.querySelectorAll(".btn-answer");
+    // 👉 TRUE/FALSE Frage
+    if (typeof q.answer === 'boolean') {
+        ['Wahr', 'Falsch'].forEach((label, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-answer';
+            btn.textContent = i === 0 ? '✅ Wahr' : '❌ Falsch';
+            btn.onclick = () => checkAnswer(i === 0, q.answer, btn);
+            answersEl.appendChild(btn);
+        });
+    }
 
-    buttons.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === questions[currentQuestion].options.indexOf(correctAnswer)) btn.classList.add("correct");
-        if (i === index && i !== questions[currentQuestion].options.indexOf(correctAnswer)) btn.classList.add("incorrect");
-    });
-
-    nextBtn.classList.remove('hidden');
-    if (index === questions[currentQuestion].options.indexOf(correctAnswer)) {
-        score++;
-    } else {
-        incorrect++;
-        loseHeart();
+    // 👉 MULTIPLE CHOICE Frage
+    else if (Array.isArray(q.options) && q.correctAnswer !== undefined) {
+        q.options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-answer';
+            btn.textContent = option;
+            btn.onclick = () => checkAnswer(option, q.correctAnswer, btn);
+            answersEl.appendChild(btn);
+        });
     }
 }
 
+// Prüft die Antwort und markiert Buttons farblich
+function checkAnswer(selected, correct, clickedBtn) {
+    const buttons = document.querySelectorAll('.btn-answer');
+
+    buttons.forEach(btn => {
+        btn.disabled = true;
+
+        if (
+            btn.textContent === correct ||
+            (btn.textContent.includes('Wahr') && correct === true) ||
+            (btn.textContent.includes('Falsch') && correct === false)
+        ) {
+            btn.classList.add('correct');
+        }
+    });
+
+    if (selected === correct) {
+        score++;
+        clickedBtn.classList.add('correct');
+    } else {
+        clickedBtn.classList.add('incorrect');
+        loseHeart();
+    }
+
+    nextBtn.classList.remove('hidden');
+}
+
+// Verliert ein Herz, wenn falsch
 function loseHeart() {
     if (quizManager.loseHeart()) endQuiz();
 }
 
+// Nächste Frage oder Quiz beenden
 function nextQuestion() {
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-        loadQuestion();
-    } else {
-        endQuiz();
-    }
+    current++;
+    if (current >= questions.length || quizManager.getHearts() <= 0) return endQuiz();
+    if (current % 3 === 0) level.textContent = Number(level.textContent) + 1;
+    renderQuestion();
 }
 
-function startTimer() {
-    quizManager.start();
-}
-
+// Quiz-Ende
 function endQuiz() {
     quizManager.end();
-    document.getElementById("question-area").classList.add("hidden");
-    nextBtn.classList.add("hidden");
-    resultBox.classList.remove("hidden");
-    scoreDisplay.textContent = `Du hast ${score} von ${questions.length} Fragen richtig beantwortet. (${incorrect} falsch)`;
+    document.querySelector('.quiz-container').innerHTML = `
+        <h2 class='text-2xl font-bold text-center mb-4'>Quiz beendet!</h2>
+        <p class='text-center text-lg'>Du hast ${score} von ${questions.length} richtig beantwortet.</p>
+    `;
 }
 
 nextBtn.onclick = nextQuestion;
-loadQuestion();
+renderQuestion();

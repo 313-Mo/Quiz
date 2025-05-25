@@ -13,6 +13,7 @@
 <body>
 <div class="quiz-container">
   <h1 class="text-3xl font-bangers text-center mb-4">QuizMaster - Informatik Comic</h1>
+
   <div class="flex justify-between items-center mb-4">
     <div class="text-sm">
       <span>Level:</span> <span id="level">1</span>
@@ -26,25 +27,33 @@
       <span id="timer">30</span>s
     </div>
   </div>
+
   <div class="w-full bg-gray-200 rounded-full mb-4">
     <div id="timer-bar" class="timer-bar w-full"></div>
   </div>
+
   <div class="mb-4">
     <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
   </div>
-  <div id="answers"></div>
+
+  <!-- 🧠 Antwort-Buttons hier schön gestylt -->
+  <div id="answers" class="flex flex-col items-center space-y-4 mb-4"></div>
+
   <div class="text-center">
-      <button id="nextBtn" class="btn-primary">Nächste Frage</button>
-      <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
-      <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
-    </div>
+    <button id="nextBtn" class="btn-primary">Nächste Frage</button>
+    <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
+    <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
+  </div>
 </div>
+
+<!-- 🧠 Thymeleaf: Fragen aus Java -->
 <script th:inline="javascript">
   /*<![CDATA[*/
-  //const quiz = /*[[${quiz}]]*/ {};
   const questions = /*[[${questions}]]*/ [];
   /*]]>*/
 </script>
+
+<!-- 💡 Scripte -->
 <script type="module" src="../scripts/Quizmanager.js"></script>
 <script type="module" src="../scripts/computerScience.js"></script>
 </body>

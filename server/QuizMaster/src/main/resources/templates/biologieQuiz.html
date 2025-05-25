@@ -1,66 +1,66 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QuizMaster - Biologie Comic</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/global.css" />
   <link rel="stylesheet" href="../styles/biologieQuiz.css" />
 </head>
 <body>
-<div class="container mx-auto px-4 py-8">
-  <div class="text-center mb-6">
-    <h1 class="text-4xl font-bold floating">🧬 QuizMaster</h1>
-    <h2 class="text-2xl">Comic Biologie-Quiz</h2>
+<div class="quiz-container">
+  <h1 class="text-3xl font-bangers text-center mb-4">QuizMaster – Biologie Comic</h1>
+
+  <div class="flex justify-between items-center mb-4">
+    <div class="text-sm">
+      <span>Level:</span> <span id="level">1</span>
+    </div>
+    <div class="flex" id="hearts">
+      <i class="fas fa-heart heart"></i>
+      <i class="fas fa-heart heart"></i>
+      <i class="fas fa-heart heart"></i>
+    </div>
+    <div class="text-sm">
+      <span id="timer">30</span>s
+    </div>
   </div>
-  <div class="quiz-container p-6 max-w-3xl mx-auto">
-    <div class="flex justify-between mb-4">
-      <div>
-        <p class="text-sm text-gray-600">Zeit</p>
-        <div class="bg-gray-200 h-3 w-48 rounded-full">
-          <div id="timer-bar" class="bg-blue-500 h-3 rounded-full" style="width: 100%;"></div>
-        </div>
-      </div>
-      <div class="text-center">
-        <p class="text-sm text-gray-600">Leben</p>
-        <div class="hearts-container" id="hearts">
-          <i class="fas fa-heart text-2xl mx-1"></i>
-          <i class="fas fa-heart text-2xl mx-1"></i>
-          <i class="fas fa-heart text-2xl mx-1"></i>
-        </div>
-      </div>
-    </div>
 
-    <div id="question-area">
-      <p class="font-bold text-lg" id="question"></p>
-      <div id="answers" class="grid grid-cols-2 gap-4 my-4"></div>
-    </div>
+  <div class="w-full bg-gray-200 rounded-full mb-4">
+    <div id="timer-bar" class="timer-bar w-full"></div>
+  </div>
 
-    <div class="text-center">
-      <button id="next-btn" class="btn-primary">Nächste Frage</button>
-      <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
-      <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
-    </div>
+  <div class="mb-4">
+    <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
+  </div>
 
-    <div id="result" class="hidden text-center mt-6">
-      <h3 class="text-xl font-bold mb-2">🎉 Dein Ergebnis</h3>
-      <p id="score" class="text-lg"></p>
-    </div>
+  <!-- MULTIPLE-CHOICE Antworten (untereinander) -->
+  <div id="answers" class="flex flex-col items-center space-y-4 mb-4"></div>
+
+  <!-- TRUE/FALSE Buttons (nebeneinander) -->
+  <div id="true-false-buttons" class="flex justify-center space-x-4 mb-4 hidden">
+    <button id="trueBtn" class="btn-primary">✅ Wahr</button>
+    <button id="falseBtn" class="btn-primary">❌ Falsch</button>
+  </div>
+
+  <div class="text-center">
+    <button id="nextBtn" class="btn-primary">Nächste Frage</button>
+    <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
+    <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
   </div>
 </div>
 
+<!-- Daten vom Server -->
 <script th:inline="javascript">
   /*<![CDATA[*/
-  //const quiz = /*[[${quiz}]]*/ {};
   const questions = /*[[${questions}]]*/ [];
   /*]]>*/
 </script>
+
+<!-- Skripte -->
 <script type="module" src="../scripts/Quizmanager.js"></script>
 <script type="module" src="../scripts/biologieQuiz.js"></script>
-
-
 </body>
 </html>

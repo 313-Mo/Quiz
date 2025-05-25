@@ -223,4 +223,15 @@ a {
 .add-button:hover {
     background-color: #1e1e40;
 }
+.correct-answer {
+    background-color: #4caf50 !important;
+    color: white !important;
+    border-color: #4caf50 !important;
+}
+
+.incorrect-answer {
+    background-color: #f44336 !important;
+    color: white !important;
+    border-color: #f44336 !important;
+}
 
