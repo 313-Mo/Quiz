@@ -7,11 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
-import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
-import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
+import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
 @Configuration
 public class DataInitializer {
@@ -64,7 +64,7 @@ public class DataInitializer {
             chemistryQuiz.add(question10);
             questionRepo.save(question10);
             
-            MultipleChoiceQuiz muChoQuizchem = new MultipleChoiceQuiz("Chemistry", 10, 10, chemistryQuiz);
+            MultipleChoiceQuiz muChoQuizchem = new MultipleChoiceQuiz(Category.CHEMISTRY, 10, 10, chemistryQuiz);
             quizRepo.save(muChoQuizchem);
             
 
@@ -119,7 +119,7 @@ public class DataInitializer {
             csQuiz.add(csq10);
             questionRepo.save(csq10);
 
-            MultipleChoiceQuiz muChoQuizcs = new MultipleChoiceQuiz("Computer Science", 10, 10, csQuiz);
+            MultipleChoiceQuiz muChoQuizcs = new MultipleChoiceQuiz(Category.COMPUTER_SCIENCE, 10, 10, csQuiz);
             quizRepo.save(muChoQuizcs);
 
             
@@ -175,7 +175,7 @@ public class DataInitializer {
             geoQuiz.add(gq10);
             questionRepo.save(gq10);
 
-            MultipleChoiceQuiz muChoQuizgeo = new MultipleChoiceQuiz("Geography", 10, 10, geoQuiz);
+            MultipleChoiceQuiz muChoQuizgeo = new MultipleChoiceQuiz(Category.GEOGRAPHY, 10, 10, geoQuiz);
             quizRepo.save(muChoQuizgeo);
 
             
@@ -231,7 +231,7 @@ public class DataInitializer {
             historyQuiz.add(hq10);
             questionRepo.save(hq10);
 
-            MultipleChoiceQuiz muChoQuizhistory = new MultipleChoiceQuiz("History", 10, 10, historyQuiz);
+            MultipleChoiceQuiz muChoQuizhistory = new MultipleChoiceQuiz(Category.HISTORY, 10, 10, historyQuiz);
             quizRepo.save(muChoQuizhistory);
 
             List<Question> generalKnowledgeQuiz = new ArrayList<>();
@@ -276,7 +276,7 @@ public class DataInitializer {
         questionRepo.save(q10);
         generalKnowledgeQuiz.add(q10);
 
-        MultipleChoiceQuiz muChoQuizgeneralKnowledge = new MultipleChoiceQuiz("General Knowledge", 10, 10, generalKnowledgeQuiz);
+        MultipleChoiceQuiz muChoQuizgeneralKnowledge = new MultipleChoiceQuiz(Category.RANDOM, 10, 10, generalKnowledgeQuiz);
         quizRepo.save(muChoQuizgeneralKnowledge);
 
         List<Question> biologyQuiz = new ArrayList<>();
@@ -321,7 +321,7 @@ public class DataInitializer {
         questionRepo.save(bq10);
         biologyQuiz.add(bq10);
 
-        MultipleChoiceQuiz muChoQuizbiology = new MultipleChoiceQuiz("Biology", 10, 10, biologyQuiz);
+        MultipleChoiceQuiz muChoQuizbiology = new MultipleChoiceQuiz(Category.BIOLOGY, 10, 10, biologyQuiz);
         quizRepo.save(muChoQuizbiology);
 
         List<Question> financeQuiz = new ArrayList<>();
@@ -366,7 +366,7 @@ public class DataInitializer {
         questionRepo.save(fq10);
         financeQuiz.add(fq10);
 
-        MultipleChoiceQuiz muChoQuizfinance = new MultipleChoiceQuiz("Finance", 10, 10, financeQuiz);
+        MultipleChoiceQuiz muChoQuizfinance = new MultipleChoiceQuiz(Category.FINANCE, 10, 10, financeQuiz);
         quizRepo.save(muChoQuizfinance);
 
         List<Question> mathQuiz = new ArrayList<>();
@@ -411,7 +411,7 @@ public class DataInitializer {
         questionRepo.save(mq10);
         mathQuiz.add(mq10);
 
-        MultipleChoiceQuiz muChoQuizmath = new MultipleChoiceQuiz("Mathematics", 10, 10, mathQuiz);
+        MultipleChoiceQuiz muChoQuizmath = new MultipleChoiceQuiz(Category.MATH, 10, 10, mathQuiz);
         quizRepo.save(muChoQuizmath);
         }
         else {

@@ -1,18 +1,21 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
 import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Services.QuizService;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.ui.Model;
 
 @Controller
 public class QuizController {
@@ -70,8 +73,11 @@ public class QuizController {
 
     @GetMapping("/category/{name}")
     public String showQuizzesByCategory(@PathVariable String name, Model model) {
-        List<Quiz> quizzes = quizService.findByCategory(name);
-        model.addAttribute("category", name);
+        //  Fehler 1 behoben: String → Category
+        Category category = Category.fromLabel(name);
+        List<Quiz> quizzes = quizService.findByCategory(category);
+
+        model.addAttribute("category", category.getLabel()); // ❗ für Thymeleaf etc.
         model.addAttribute("quizzes", quizzes);
         return "quizSelection";
     }
@@ -90,27 +96,31 @@ public class QuizController {
             model.addAttribute("questions", questions);
         }
         
-        String category = quiz.getCategory(); 
-        switch (category) {
+        Category category = quiz.getCategory(); // Typ: Category
+
+        // Fehler 2 behoben: Category ist kein String → verwende getLabel()
+        switch (category.getLabel()) {
             case "Biology":
-                return "biologieQuiz"; 
+                return "biologieQuiz";
             case "Mathematics":
-                return "matheQuiz"; 
+                return "matheQuiz";
             case "Finance":
-                return "finanzQuiz"; 
+                return "finanzQuiz";
             case "Chemistry":
-                return "chemistry"; 
+                return "chemistry";
             case "Geography":
-                return "geography"; 
+                return "geography";
             case "History":
-                return "history"; 
+                return "history";
             case "Computer Science":
-                return "computerScience"; 
+                return "computerScience";
             case "General Knowledge":
                 return "random";
             default:
                 return "categorySelection";
         }
     }
-
 }
+// End of QuizController.java
+        
+        

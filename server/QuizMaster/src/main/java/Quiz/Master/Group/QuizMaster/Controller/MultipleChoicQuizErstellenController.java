@@ -1,10 +1,7 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
-import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
-import Quiz.Master.Group.QuizMaster.Entities.Question;
-import Quiz.Master.Group.QuizMaster.Entities.Quiz;
-import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
-import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
+import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
+import Quiz.Master.Group.QuizMaster.Entities.Question;
+import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
+import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
 @Controller
 public class MultipleChoicQuizErstellenController {
@@ -31,7 +31,7 @@ public class MultipleChoicQuizErstellenController {
     }
     @PostMapping("/add-quiz")
     public String handleQuizSubmission(
-        @RequestParam("category") String category,
+        @RequestParam("category") String categoryLabel,
         @RequestParam("selectedTime") int selectedTime,
         @RequestParam("question") String questionText,
         @RequestParam("option1") String option1,
@@ -75,6 +75,8 @@ public class MultipleChoicQuizErstellenController {
     */
 
     // Für jede erstellte Frage wird, im Moment, ein neues Quiz erstellt
+     Category category = Category.fromLabel(categoryLabel);
+
     List<Question> questionList = new ArrayList<>();
     questionList.add(question);
     MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(category, selectedTime, 1, questionList);

@@ -18,6 +18,7 @@ h1 {
     background: #2c2c54;
     padding: 10px 30px;
     border-radius: 20px;
+    margin-top: 380px; /* <-- Abstand nach unten von der lila Fläche */
     margin-bottom: 40px;
     margin-top: 80px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -31,6 +32,7 @@ h1 {
     padding: 0 60px 60px 80px;
     margin-top: 360px; /* <-- Abstand nach unten von der lila Fläche */
     z-index: 2;
+     margin-top: 40px;
     width: 100%;
     max-width: 900px;
 }
@@ -41,12 +43,17 @@ h1 {
     font-size: 20px;
     padding: 20px;
     height: 100px;
+    width: 140px;
     text-align: center;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .category-button:hover {

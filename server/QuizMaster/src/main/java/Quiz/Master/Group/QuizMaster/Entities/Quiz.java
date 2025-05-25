@@ -1,10 +1,13 @@
 package Quiz.Master.Group.QuizMaster.Entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -13,7 +16,9 @@ public abstract class Quiz {
     @GeneratedValue
     protected Long id;
 
-    protected String category;
+    @Enumerated(EnumType.STRING)  // <-- Das ist wichtig!
+    protected Category category;
+
     protected int timeLimit;
     protected int numberOfQuestions;
 
@@ -23,7 +28,7 @@ public abstract class Quiz {
         this.numberOfQuestions = 0;
     }
 
-    public Quiz(String category, int timeLimit, int numberOfQuestions) {
+    public Quiz(Category category, int timeLimit, int numberOfQuestions) {
         this.category = category;
         this.timeLimit = timeLimit;
         this.numberOfQuestions = numberOfQuestions;
@@ -33,7 +38,7 @@ public abstract class Quiz {
         return id;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 

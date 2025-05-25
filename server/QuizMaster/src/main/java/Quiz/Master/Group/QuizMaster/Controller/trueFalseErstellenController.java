@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import Quiz.Master.Group.QuizMaster.Entities.Quiz;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
@@ -28,11 +28,12 @@ public class trueFalseErstellenController {
 
     @PostMapping("/add-truefalse-quiz")
     public String handleTrueFalseSubmission(
-            @RequestParam("category") String category,
+            @RequestParam("category") String categoryLabel,
             @RequestParam("selectedTime") int selectedTime,
             @RequestParam("question") String questionText,
             @RequestParam("answer") boolean answerValue) {
         
+        Category category = Category.fromLabel(categoryLabel);
         //Hier fehlt die Logik für die Speicherung mehrerer Fragen in einem Quiz
         /* 
         List<Quiz> quizzes = trFlQuizRepository.findByCategory(category);
