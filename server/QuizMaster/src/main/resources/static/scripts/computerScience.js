@@ -18,11 +18,11 @@ function loadQuestion() {
     answersEl.innerHTML = '';
     nextBtn.classList.add('hidden');
 
-    // ✅ TRUE/FALSE
+    
     if (typeof q.answer === 'boolean') {
         renderTrueFalse(q);
     }
-    // ✅ MULTIPLE-CHOICE
+    
     else if (Array.isArray(q.options) && typeof q.correctAnswer !== 'undefined') {
         renderMultipleChoice(q);
     }
@@ -54,7 +54,7 @@ function checkAnswer(selected, correct, clickedBtn) {
     buttons.forEach(btn => {
         btn.disabled = true;
 
-        // Wenn die Antwort korrekt ist
+       
         if (
             btn.textContent === correct ||
             (btn.textContent.includes("Wahr") && correct === true) ||

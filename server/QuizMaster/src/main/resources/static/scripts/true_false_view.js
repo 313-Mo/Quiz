@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // TRUE/FALSE Frage?
+    
     if (typeof frage === "object" && typeof frage.answer === "boolean") {
       questionText.textContent = frage.text;
       answersContainer.innerHTML = `
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
 
-    // Multiple-Choice?
+    
     else if (typeof frage === "object" && Array.isArray(frage.answers)) {
       questionText.textContent = frage.text;
       answersContainer.innerHTML = "";
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Fehlerhafte Struktur
+    
     else {
       questionText.textContent = "❓ Ungültige Frage!";
       answersContainer.innerHTML = "";

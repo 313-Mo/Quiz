@@ -9,18 +9,18 @@ const nextBtn = document.getElementById('nextBtn');
 const level = document.getElementById('level');
 const timerBar = document.getElementById('timer-bar');
 
-// 🧠 Initialisieren
+
 quizManager.init(document.getElementById('hearts-container'), timerBar, 30);
 quizManager.start();
 
-// 🎯 Frage laden
+
 function loadQuestion() {
     const q = questions[current];
     questionEl.textContent = q.text || q.questionText || '❓ Ungültige Frage!';
     answersEl.innerHTML = '';
     nextBtn.classList.add('hidden');
 
-    // ✅ TRUE/FALSE
+    
     if (typeof q.answer === 'boolean') {
         ['Wahr', 'Falsch'].forEach((label, i) => {
             const btn = document.createElement('button');
@@ -30,7 +30,7 @@ function loadQuestion() {
             answersEl.appendChild(btn);
         });
     }
-    // ✅ MULTIPLE CHOICE
+    
     else if (Array.isArray(q.options) && typeof q.correctAnswer !== 'undefined') {
         q.options.forEach(opt => {
             const btn = document.createElement('button');
@@ -42,7 +42,7 @@ function loadQuestion() {
     }
 }
 
-// ✅ Antwort überprüfen
+
 function checkAnswer(selected, correct, clickedBtn) {
     const buttons = document.querySelectorAll('.btn-answer');
 
@@ -68,12 +68,12 @@ function checkAnswer(selected, correct, clickedBtn) {
     nextBtn.classList.remove('hidden');
 }
 
-// 💔 Herz verlieren
+
 function loseHeart() {
     if (quizManager.loseHeart()) endQuiz();
 }
 
-// ➡️ Nächste Frage
+
 function nextQuestion() {
     current++;
     if (current >= questions.length || quizManager.getHearts() <= 0) return endQuiz();
@@ -81,7 +81,7 @@ function nextQuestion() {
     loadQuestion();
 }
 
-// 🛑 Quiz beenden
+
 function endQuiz() {
     quizManager.end();
     document.querySelector('.quiz-container').innerHTML = `

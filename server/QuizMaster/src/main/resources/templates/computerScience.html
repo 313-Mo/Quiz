@@ -36,7 +36,7 @@
     <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
   </div>
 
-  <!-- 🧠 Antwort-Buttons hier schön gestylt -->
+  
   <div id="answers" class="flex flex-col items-center space-y-4 mb-4"></div>
 
   <div class="text-center">
@@ -46,14 +46,14 @@
   </div>
 </div>
 
-<!-- 🧠 Thymeleaf: Fragen aus Java -->
+
 <script th:inline="javascript">
   /*<![CDATA[*/
   const questions = /*[[${questions}]]*/ [];
   /*]]>*/
 </script>
 
-<!-- 💡 Scripte -->
+
 <script type="module" src="../scripts/Quizmanager.js"></script>
 <script type="module" src="../scripts/computerScience.js"></script>
 </body>

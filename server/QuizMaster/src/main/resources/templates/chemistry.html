@@ -36,7 +36,7 @@
     <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
   </div>
 
-  <!-- ✅ EIN Container für alle Antworten -->
+  
   <div id="answers" class="flex flex-col items-center space-y-4 mb-4"></div>
 
   <div class="text-center">
@@ -46,14 +46,14 @@
   </div>
 </div>
 
-<!-- ✅ Datenübergabe aus Controller -->
+
 <script th:inline="javascript">
   /*<![CDATA[*/
   const questions = /*[[${questions}]]*/ [];
   /*]]>*/
 </script>
 
-<!-- ✅ Skripte -->
+
 <script type="module" src="../scripts/Quizmanager.js"></script>
 <script type="module" src="../scripts/chemistry.js"></script>
 </body>

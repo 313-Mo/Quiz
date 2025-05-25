@@ -1,12 +1,9 @@
-//  Importiere das Quizmanager-Modul
 import { quizManager } from './Quizmanager.js';
-
-//  Initialisiere Variablen
 let currentQuestion = 0;
 let score = 0;
 let incorrect = 0;
 
-//  Greife auf HTML-Elemente zu
+
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
 const nextBtn = document.getElementById('nextBtn');
@@ -15,18 +12,18 @@ const heartsContainer = document.getElementById('hearts');
 const resultBox = document.getElementById('result');
 const scoreDisplay = document.getElementById('score');
 
-//  Starte das Quiz
+
 quizManager.init(heartsContainer, timerBar, 120);
 quizManager.start();
 
-//  Zeige die aktuelle Frage
+
 function loadQuestion() {
     const q = questions[currentQuestion];
     questionEl.textContent = q.text || q.questionText || "Keine Frage gefunden";
     answersEl.innerHTML = '';
     nextBtn.classList.add('hidden');
 
-    //  TRUE/FALSE Frage
+    
     if (typeof q.answer === 'boolean') {
         ['✅ Wahr', '❌ Falsch'].forEach((label, i) => {
             const btn = document.createElement('button');
@@ -37,7 +34,7 @@ function loadQuestion() {
         });
     }
 
-    //  MULTIPLE-CHOICE Frage
+    
     else if (Array.isArray(q.options)) {
         q.options.forEach((opt, i) => {
             const btn = document.createElement('button');
@@ -49,7 +46,7 @@ function loadQuestion() {
     }
 }
 
-//  TRUE/FALSE Auswertung
+
 function checkTFAnswer(selected, correct, btnClicked) {
     const allButtons = document.querySelectorAll('.btn-answer');
     allButtons.forEach(btn => {
@@ -71,7 +68,7 @@ function checkTFAnswer(selected, correct, btnClicked) {
     nextBtn.classList.remove('hidden');
 }
 
-//  MULTIPLE-CHOICE Auswertung
+
 function checkMCAnswer(selected, correct, btnClicked) {
     const allButtons = document.querySelectorAll('.btn-answer');
     allButtons.forEach(btn => {
@@ -93,12 +90,12 @@ function checkMCAnswer(selected, correct, btnClicked) {
     nextBtn.classList.remove('hidden');
 }
 
-//  Herz verlieren bei Fehler
+
 function loseHeart() {
     if (quizManager.loseHeart()) endQuiz();
 }
 
-//  Nächste Frage anzeigen
+
 function nextQuestion() {
     currentQuestion++;
     if (currentQuestion < questions.length) {
@@ -108,7 +105,7 @@ function nextQuestion() {
     }
 }
 
-//  Quiz beenden
+
 function endQuiz() {
     quizManager.end();
     document.getElementById('question-area')?.classList.add('hidden');
@@ -117,8 +114,6 @@ function endQuiz() {
     scoreDisplay.textContent = `Du hast ${score} von ${questions.length} Fragen richtig beantwortet. (${incorrect} falsch)`;
 }
 
-//  Event Listener für "Nächste Frage"
-nextBtn.onclick = nextQuestion;
 
-//  Starte mit der ersten Frage
+nextBtn.onclick = nextQuestion;
 loadQuestion();

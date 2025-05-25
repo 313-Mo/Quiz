@@ -12,14 +12,14 @@ const timerBar = document.getElementById('timer-bar');
 quizManager.init(document.getElementById('hearts'), timerBar, 30);
 quizManager.start();
 
-// Zeigt eine Frage basierend auf Fragetyp
+
 function renderQuestion() {
     const q = questions[current];
     questionEl.textContent = q.text || q.questionText || '❓ Ungültige Frage!';
     answersEl.innerHTML = '';
     nextBtn.classList.add('hidden');
 
-    // 👉 TRUE/FALSE Frage
+    
     if (typeof q.answer === 'boolean') {
         ['Wahr', 'Falsch'].forEach((label, i) => {
             const btn = document.createElement('button');
@@ -30,7 +30,7 @@ function renderQuestion() {
         });
     }
 
-    // 👉 MULTIPLE CHOICE Frage
+    
     else if (Array.isArray(q.options) && q.correctAnswer !== undefined) {
         q.options.forEach(option => {
             const btn = document.createElement('button');
@@ -42,7 +42,7 @@ function renderQuestion() {
     }
 }
 
-// Prüft die Antwort und markiert Buttons farblich
+
 function checkAnswer(selected, correct, clickedBtn) {
     const buttons = document.querySelectorAll('.btn-answer');
 
@@ -69,12 +69,12 @@ function checkAnswer(selected, correct, clickedBtn) {
     nextBtn.classList.remove('hidden');
 }
 
-// Verliert ein Herz, wenn falsch
+
 function loseHeart() {
     if (quizManager.loseHeart()) endQuiz();
 }
 
-// Nächste Frage oder Quiz beenden
+
 function nextQuestion() {
     current++;
     if (current >= questions.length || quizManager.getHearts() <= 0) return endQuiz();
@@ -82,7 +82,7 @@ function nextQuestion() {
     renderQuestion();
 }
 
-// Quiz-Ende
+
 function endQuiz() {
     quizManager.end();
     document.querySelector('.quiz-container').innerHTML = `
