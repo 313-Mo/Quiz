@@ -31,6 +31,7 @@ public class MultipleChoicQuizErstellenController {
     }
     @PostMapping("/add-quiz")
     public String handleQuizSubmission(
+        @RequestParam("name") String name,
         @RequestParam("category") String category,
         @RequestParam("selectedTime") int selectedTime,
         @RequestParam("question") String questionText,
@@ -77,7 +78,7 @@ public class MultipleChoicQuizErstellenController {
     // Für jede erstellte Frage wird, im Moment, ein neues Quiz erstellt
     List<Question> questionList = new ArrayList<>();
     questionList.add(question);
-    MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(category, selectedTime, 1, questionList);
+    MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(name, category, selectedTime, 1, questionList);
 
     questionRepository.save(question);
     muChoQuizRepository.save(quiz);

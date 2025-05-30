@@ -28,6 +28,7 @@ public class trueFalseErstellenController {
 
     @PostMapping("/add-truefalse-quiz")
     public String handleTrueFalseSubmission(
+            @RequestParam("name") String name,
             @RequestParam("category") String category,
             @RequestParam("selectedTime") int selectedTime,
             @RequestParam("question") String questionText,
@@ -56,7 +57,7 @@ public class trueFalseErstellenController {
         List<Boolean> answersList = new ArrayList<>();
         answersList.add(answerValue);
 
-        TrueFalseQuiz quiz = new TrueFalseQuiz(category, selectedTime, 1, questionList, answersList);
+        TrueFalseQuiz quiz = new TrueFalseQuiz(name, category, selectedTime, 1, questionList, answersList);
         trFlQuizRepository.save(quiz);
         return "redirect:/add-truefalse-quiz";
     }
