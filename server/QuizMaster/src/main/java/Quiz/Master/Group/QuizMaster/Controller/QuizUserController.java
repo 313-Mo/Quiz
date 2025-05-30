@@ -14,7 +14,7 @@ public class QuizUserController {
 
    //Aussicht ---> Pages
    private static final String VIEW_SIGN_UP = "signUp";
-   private static final String VIEW_LOGIN = "login";
+   private static final String VIEW_LOGIN = "logIn";
    private static final String VIEW_START_PAGE = "startPage";
    private static final String VIEW_CATEGORY_SELECTION = "categorySelection";
 
