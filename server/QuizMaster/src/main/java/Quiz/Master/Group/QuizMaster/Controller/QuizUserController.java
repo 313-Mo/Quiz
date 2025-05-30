@@ -11,6 +11,20 @@ import org.springframework.ui.Model;
 
 @Controller
 public class QuizUserController {
+
+   //Aussicht
+   private static final String VIEW_SIGN_UP = "signUp";
+   private static final String VIEW_LOGIN = "login";
+   private static final String VIEW_START_PAGE = "startPage";
+   private static final String VIEW_CATEGORY_SELECTION = "categorySelection";
+
+   private static final String REDIRECT_LOGIN = "redirect:/login";
+   private static final String REDIRECT_CATEGORY_SELECTION = "redirect:/categorySelection";
+
+
+   private static final String  ATTR_ERROR = "error";
+
+
    @Autowired
    private final QuizUserService userService;
 
@@ -20,41 +34,41 @@ public class QuizUserController {
 
    @GetMapping("/signUp")
    public String signUp() {
-      return "signUp"; 
+      return VIEW_SIGN_UP; 
    }
 
    @PostMapping("/checkSignUp")
    public String signUp(String firstName, String lastName, String username, String password, String email, int age, Model model) {
       try {
          userService.createUser(firstName, lastName, username, password, email, age);
-         return "redirect:/logIn"; 
+         return REDIRECT_LOGIN; 
       } catch (IllegalArgumentException e) {
-         model.addAttribute("error", e.getMessage());
-         return "signUp"; 
+         model.addAttribute(ATTR_ERROR, e.getMessage());
+         return VIEW_SIGN_UP; 
       }
    }
 
    @GetMapping("/logIn")
    public String logIn(String username, String password) {
-         return "logIn";
+         return VIEW_LOGIN;
    }
 
    @PostMapping("/checkLogIn")
    public String checkLogIn(String username, String password) {
       if (userService.checkLogin(username, password)) {
-         return "redirect:/categorySelection"; 
+         return REDIRECT_CATEGORY_SELECTION; 
       } else {
-         return "logIn"; 
+         return VIEW_LOGIN; 
       }
    }
 
    @GetMapping("/")
    public String startPage() {
-      return "startPage"; 
+      return VIEW_START_PAGE; 
    }
 
    @GetMapping("/categorySelection")
    public String categorySelection() {
-      return "categorySelection"; 
+      return VIEW_CATEGORY_SELECTION; 
    }
 }
