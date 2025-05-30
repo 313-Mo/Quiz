@@ -12,13 +12,14 @@ import org.springframework.ui.Model;
 @Controller
 public class QuizUserController {
 
-   //Aussicht
+   //Aussicht ---> Pages
    private static final String VIEW_SIGN_UP = "signUp";
    private static final String VIEW_LOGIN = "login";
    private static final String VIEW_START_PAGE = "startPage";
    private static final String VIEW_CATEGORY_SELECTION = "categorySelection";
 
-   private static final String REDIRECT_LOGIN = "redirect:/login";
+   private static final String REDIRECT_LOGIN = "redirect:/logIn";
+
    private static final String REDIRECT_CATEGORY_SELECTION = "redirect:/categorySelection";
 
 
