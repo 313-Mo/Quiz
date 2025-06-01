@@ -4,16 +4,51 @@ function selectTime(button, minutes) {
   button.classList.add('active');
 }
 
+function addTFQuestion() {
+  const question = document.getElementById("question").value.trim();
+  const answer = document.getElementById("answer").value;
 
-function handleSubmit(event) {
-  const selectedTime = document.getElementById('selectedTime').value;
-
-  if (!selectedTime) {
-    event.preventDefault(); 
-    alert("⏳ Bitte wähle eine Quiz-Zeit!");
-    return false;
+  if (!question || answer === "") {
+    alert("Bitte Frage und Antwort eingeben!");
+    return;
   }
 
-  alert("🎉 Dein Quiz wurde erfolgreich gespeichert!");
-  return true; 
+  fetch("/add-tf-question", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      question: question,
+      answer: answer
+    })
+  })
+    .then(res => res.text())
+    .then(msg => {
+      alert("✅ Frage gespeichert: " + msg);
+      document.getElementById("question").value = "";
+      document.getElementById("answer").value = "";
+    });
+}
+
+function finalizeTFQuiz() {
+  const category = document.getElementById("quizCategory").value;
+  const selectedTime = document.getElementById("selectedTime").value;
+
+  if (!category || !selectedTime) {
+    alert("Bitte alle Felder ausfüllen!");
+    return;
+  }
+
+  fetch("/finalize-truefalse-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      category: category,
+      selectedTime: selectedTime
+    })
+  })
+    .then(res => res.text())
+    .then(msg => {
+      alert("🎉 " + msg);
+      window.location.href = "/category/" + category.toLowerCase();
+    });
 }

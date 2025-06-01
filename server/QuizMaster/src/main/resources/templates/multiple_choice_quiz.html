@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,8 @@
 <body>
   <h1>✏️ Multiple Choice erstellen</h1>
 
-  <form th:action="@{/add-quiz}" method="post" onsubmit="return handleSubmit(event)">
+  <form onsubmit="return handleSubmit(event)">
+    
     <label>⏱️ Wähle die Quiz-Zeit:</label>
     <div class="time-buttons">
       <button type="button" onclick="selectTime(this, 5)">5 Min</button>
@@ -21,7 +22,7 @@
 
     
     <label>📚 Kategorie:</label>
-    <select name="category" required>
+    <select name="category" id="quizCategory" required>
       <option value="">Kategorie wählen...</option>
       <option value="Chemistry">🧪 Chemie</option>
       <option value="Mathematics">➗ Mathe</option>
@@ -37,30 +38,30 @@
     <input type="text" name="name" placeholder="Z.B. Mathe-Test" required />
 
     <label>❓ Frage:</label>
-    <input type="text" name="question" placeholder="Z.B. Was ist 2+2?" required />
+    <input type="text" id="questionText" placeholder="Z.B. Was ist 2+2?" required />
 
+   
     <label>🔵 Option 1:</label>
-    <input type="text" name="option1" required />
-
+    <input type="text" id="opt1" required />
     <label>🟠 Option 2:</label>
-    <input type="text" name="option2" required />
-
+    <input type="text" id="opt2" required />
     <label>🟢 Option 3:</label>
-    <input type="text" name="option3" required />
-
+    <input type="text" id="opt3" required />
     <label>🟣 Option 4:</label>
-    <input type="text" name="option4" required />
+    <input type="text" id="opt4" required />
 
+    
     <label>✅ Richtige Antwort:</label>
-    <select name="correct-answer" required>
+    <select id="correctAnswer" required>
       <option value="">Bitte wählen...</option>
-      <option value="option1">Option 1</option>
-      <option value="option2">Option 2</option>
-      <option value="option3">Option 3</option>
-      <option value="option4">Option 4</option>
+      <option value="0">Option 1</option>
+      <option value="1">Option 2</option>
+      <option value="2">Option 3</option>
+      <option value="3">Option 4</option>
     </select>
 
-    <button type="submit">🎉 Speichern</button>
+    <button type="button" onclick="addAnotherQuestion()">➕ Andere Frage</button>
+    <button type="button" onclick="finishQuiz()">🎉 Speichern</button>
   </form>
 
   <script src="../scripts/multiple_choice_quiz.js"></script>

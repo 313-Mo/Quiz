@@ -15,9 +15,15 @@ import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Services.QuizService;
 import Quiz.Master.Group.QuizMaster.Entities.Category;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map; 
+
 
 @Controller
 public class QuizController {
+
     // Aussicht 
     private static final String VIEW_SHARE_QUIZ = "shareQuiz";
     private static final String VIEW_SELECT_QUIZ = "selectQuiz";
@@ -44,10 +50,7 @@ public class QuizController {
     private static final String CATEGORY_COMPUTER_SCIENCE = "Computer Science";
     private static final String CATEGORY_GENERAL = "General Knowlege";
 
-
-
-
-
+    
     @Autowired
     private final QuizService quizService;
 
@@ -114,15 +117,25 @@ public class QuizController {
     @GetMapping("/quiz/{id}")
     public String showQuiz(@PathVariable Long id, Model model) {
         Quiz quiz = quizService.findById(id);
+
         if (quiz instanceof MultipleChoiceQuiz) {
             MultipleChoiceQuiz muChoQuiz = (MultipleChoiceQuiz) quiz;
             List<Question> questions = muChoQuiz.getQuestionList();
             model.addAttribute("questions", questions);
-        }
-        else if (quiz instanceof TrueFalseQuiz) {
+        } else if (quiz instanceof TrueFalseQuiz) {
             TrueFalseQuiz tfQuiz = (TrueFalseQuiz) quiz;
-            List<String> questions = tfQuiz.getQuestionList();
-            model.addAttribute("questions", questions);
+            List<String> questionTexts = tfQuiz.getQuestionList();
+            List<Boolean> answers = tfQuiz.getAnswerList();
+
+            List<Map<String, Object>> combined = new ArrayList<>();
+            for (int i = 0; i < questionTexts.size(); i++) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("text", questionTexts.get(i));
+                item.put("answer", answers.get(i));
+                combined.add(item);
+            }
+
+            model.addAttribute("questions", combined);
         }
         
         Category category = quiz.getCategory(); 

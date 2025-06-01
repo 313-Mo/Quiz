@@ -1,29 +1,46 @@
 import { quizManager } from './Quizmanager.js';
 
-let current = 0, score = 0;
+let current = 0;
+let score = 0;
+
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
 const nextBtn = document.getElementById('nextBtn');
 const timerBar = document.getElementById('timer-bar');
 const timerText = document.getElementById('timer');
-const heartsContainer = document.getElementById('hearts');
 const level = document.getElementById('level');
 
-// Initialize QuizManager
-quizManager.init(heartsContainer, timerBar, 30);
+quizManager.init(document.getElementById('hearts'), timerBar, 30);
 quizManager.start();
 
 function loadQuestion() {
     const q = questions[current];
-    questionEl.textContent = q.questionText;
+    questionEl.textContent = q.questionText || q.text;
     answersEl.innerHTML = '';
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-answer';
-        btn.textContent = opt;
-        btn.onclick = () => checkAnswer(i, btn);
-        answersEl.appendChild(btn);
-    });
+
+    if (q.options) {
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-answer';
+            btn.textContent = opt;
+            btn.onclick = () => checkAnswer(i, btn);
+            answersEl.appendChild(btn);
+        });
+    } else {
+        const trueBtn = document.createElement('button');
+        trueBtn.className = 'btn-answer';
+        trueBtn.textContent = 'Wahr';
+        trueBtn.onclick = () => checkTFAnswer(true, trueBtn);
+
+        const falseBtn = document.createElement('button');
+        falseBtn.className = 'btn-answer';
+        falseBtn.textContent = 'Falsch';
+        falseBtn.onclick = () => checkTFAnswer(false, falseBtn);
+
+        answersEl.appendChild(trueBtn);
+        answersEl.appendChild(falseBtn);
+    }
+
     nextBtn.classList.add('hidden');
 }
 
@@ -33,11 +50,16 @@ function checkAnswer(index, button) {
 
     buttons.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === questions[current].options.indexOf(correctAnswer)) btn.classList.add('correct');
-        if (i === index && i !== questions[current].options.indexOf(correctAnswer)) btn.classList.add('incorrect');
+        if (i === questions[current].options.indexOf(correctAnswer)) {
+            btn.classList.add('correct');
+        }
+        if (i === index && i !== questions[current].options.indexOf(correctAnswer)) {
+            btn.classList.add('incorrect');
+        }
     });
 
     nextBtn.classList.remove('hidden');
+
     if (index === questions[current].options.indexOf(correctAnswer)) {
         score++;
     } else {
@@ -45,8 +67,20 @@ function checkAnswer(index, button) {
     }
 }
 
-function loseHeart() {
-    if (quizManager.loseHeart()) endQuiz();
+function checkTFAnswer(userAnswer, button) {
+    const correctAnswer = questions[current].answer;
+    const buttons = document.querySelectorAll('.btn-answer');
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (userAnswer === correctAnswer) {
+        button.classList.add('correct');
+        score++;
+    } else {
+        button.classList.add('incorrect');
+        loseHeart();
+    }
+
+    nextBtn.classList.remove('hidden');
 }
 
 function nextQuestion() {
@@ -56,11 +90,18 @@ function nextQuestion() {
     loadQuestion();
 }
 
+function loseHeart() {
+    if (quizManager.loseHeart()) endQuiz();
+}
+
 function endQuiz() {
     quizManager.end();
-    document.querySelector('.quiz-container').innerHTML = `<h2 class='text-2xl font-bold text-center mb-4'>Quiz beendet!</h2>
-    <p class='text-center text-lg'>Du hast ${score} von ${questions.length} richtig beantwortet.</p>`;
+    document.querySelector('.quiz-container').innerHTML = `
+        <h2 class="text-2xl font-bold text-center mb-4">Quiz beendet</h2>
+        <p class="text-center text-lg">Du hast ${score} von ${questions.length} richtig beantwortet.</p>
+    `;
 }
 
 nextBtn.onclick = nextQuestion;
+
 loadQuestion();

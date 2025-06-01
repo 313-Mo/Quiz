@@ -9,7 +9,7 @@
 <body>
   <h1>✏️ True/False Quiz erstellen</h1>
 
-<form th:action="@{/add-truefalse-quiz}" method="post" onsubmit="return handleSubmit(event)">
+  <form onsubmit="return false;">
     <label>⏱️ Wähle die Quiz-Zeit:</label>
     <div class="time-buttons">
       <button type="button" onclick="selectTime(this, 5)">5 Min</button>
@@ -17,10 +17,10 @@
       <button type="button" onclick="selectTime(this, 15)">15 Min</button>
       <button type="button" onclick="selectTime(this, 20)">20 Min</button>
     </div>
-    <input type="hidden" id="selectedTime" name="selectedTime" required />
+    <input type="hidden" id="selectedTime" required />
 
     <label>📚 Wähle eine Kategorie:</label>
-    <select name="category" required>
+    <select id="quizCategory" required>
       <option value="">Kategorie wählen...</option>
       <option value="Chemistry">🧪 Chemie</option>
       <option value="Mathematics">➗ Mathe</option>
@@ -33,16 +33,17 @@
     </select>
 
     <label for="question">❓ Frage:</label>
-    <input type="text" id="question" name="question" placeholder="Gib deine Frage ein" required />
+    <input type="text" id="question" placeholder="Gib deine Frage ein" required />
 
     <label for="answer">✅ Antwort:</label>
-    <select id="answer" name="answer" required>
+    <select id="answer" required>
       <option value="">Bitte wählen</option>
       <option value="true">Wahr</option>
       <option value="false">Falsch</option>
     </select>
 
-    <button type="submit">🎉 Speichern</button>
+    <button type="button" onclick="addTFQuestion()">➕ Weitere Frage</button>
+    <button type="button" onclick="finalizeTFQuiz()">🎉 Speichern</button>
   </form>
 
   <script src="../scripts/true_false_quiz.js"></script>
