@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -9,8 +8,12 @@
 </head>
 <body>
   <h1>Welche Art von Quiz?</h1>
+
+ 
+  <a href="/categorySelection" class="back-button">⬅️ Zurück zur Auswahl Kategorie</a>
+
   <div class="quiz-type">
-    <a  th:href="@{/add-quiz}" class="quiz-button" >Multiple Choice</a>
+    <a th:href="@{/add-quiz}" class="quiz-button">Multiple Choice</a>
     <a th:href="@{/add-truefalse-quiz}" class="quiz-button">True / False</a>
   </div>
 </body>
