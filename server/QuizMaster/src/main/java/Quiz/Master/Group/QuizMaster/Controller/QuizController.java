@@ -20,15 +20,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map; 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.ui.Model;
 
 @Controller
 public class QuizController {
 
+    // Aussicht 
+    private static final String VIEW_SHARE_QUIZ = "shareQuiz";
+    private static final String VIEW_SELECT_QUIZ = "selectQuiz";
+    private static final String VIEW_BIOLOGIE_QUIZ = "biologieQuiz";
+    private static final String VIEW_MATHE_QUIZ= "matheQuiz";
+    private static final String VIEW_FINANZ_QUIZ = "finanzQuiz";
+    private static final String VIEW_CHEMISTRY= "chemistry";
+    private static final String VIEW_GEO = "geography";
+    private static final String VIEW_HISTORY= "history";
+    private static final String VIEW_COMPUTER_SCIENCE = "computerScience";
+    private static final String VIEW_RANDOM = "random";
+    private static final String VIEW_CATEGORY_SELECTION = "categorySelection";
+    private static final String VIEW_QUIZ_SELECTION = "quizSelection";
+
+
+    // Category
+
+    private static final String CATEGORY_BIOLOGY = "Biology";
+    private static final String CATEGORY_MATHEMATICS = "Mathematics";
+    private static final String CATEGORY_FINANCE = "Finance";
+    private static final String CATEGORY_CHEMISTRY = "Chemistry";
+    private static final String CATEGORY_GEOGRAPHY = "Geography";
+    private static final String CATEGORY_HISTORY = "History";
+    private static final String CATEGORY_COMPUTER_SCIENCE = "Computer Science";
+    private static final String CATEGORY_GENERAL = "General Knowlege";
+
+    
     @Autowired
     private final QuizService quizService;
 
