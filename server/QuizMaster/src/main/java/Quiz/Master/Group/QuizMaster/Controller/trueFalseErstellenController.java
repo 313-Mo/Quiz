@@ -37,6 +37,7 @@ public class trueFalseErstellenController {
 
     @PostMapping("/add-truefalse-quiz")
     public String handleTrueFalseSubmission(
+            @RequestParam("name") String name,
             @RequestParam("category") String category,
             @RequestParam("selectedTime") int selectedTime,
             @RequestParam("question") String questionText,

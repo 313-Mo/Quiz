@@ -41,6 +41,7 @@ public class MultipleChoicQuizErstellenController {
     }
     @PostMapping("/add-quiz")
     public String handleQuizSubmission(
+        @RequestParam("name") String name,
         @RequestParam("category") String category,
         @RequestParam("selectedTime") int selectedTime,
         @RequestParam("question") String questionText,

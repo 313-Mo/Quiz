@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz mit Freunden teilen</title>
+  <link rel="stylesheet" href="../styles/global.css" />
+  <link rel="stylesheet" href="../styles/Feedback.css" />
+</head>
+<body>
+<form id="feedbackForm" method="post" action="/submitFeedback">
+  <div class="feedback-container">
+    <h1>Gib uns dein Feedback!</h1>
+    <p>Was hat dir gefallen oder was können wir verbessern?</p>
+
+    <textarea name="feedbackText" id="feedbackText" placeholder="Dein Feedback..." required></textarea>
+
+    <div class="stars" id="starContainer">
+      <label><input type="radio" name="rating" value="1"><span>★</span></label>
+      <label><input type="radio" name="rating" value="2"><span>★</span></label>
+      <label><input type="radio" name="rating" value="3"><span>★</span></label>
+      <label><input type="radio" name="rating" value="4"><span>★</span></label>
+      <label><input type="radio" name="rating" value="5"><span>★</span></label>
+    </div>
+
+    <button type="submit" class="submit-btn">Absenden</button>
+  </div>
+</form>
+
+<script type="module" src="../scripts/Feedback.js"></script>
+</body>
+</html>
+
