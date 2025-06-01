@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multiple Choice Quiz erstellen</title>
+  <link rel="stylesheet" href="../styles/multiple_choic_quiz.css" />
+</head>
+<body>
+  <h1>✏️ Multiple Choice erstellen</h1>
+
+  <form onsubmit="return handleSubmit(event)">
+    
+    <label>⏱️ Wähle die Quiz-Zeit:</label>
+    <div class="time-buttons">
+      <button type="button" onclick="selectTime(this, 5)">5 Min</button>
+      <button type="button" onclick="selectTime(this, 10)">10 Min</button>
+      <button type="button" onclick="selectTime(this, 15)">15 Min</button>
+      <button type="button" onclick="selectTime(this, 20)">20 Min</button>
+    </div>
+    <input type="hidden" id="selectedTime" name="selectedTime" required />
+
+   
+    <label>📚 Kategorie:</label>
+    <select name="category" id="quizCategory" required>
+      <option value="">Kategorie wählen...</option>
+      <option value="Chemistry">🧪 Chemie</option>
+      <option value="Mathematics">➗ Mathe</option>
+      <option value="Geography">🌍 Geographie</option>
+      <option value="Finance">💰 Finanz</option>
+      <option value="General Knowledge">🎲 Random</option>
+      <option value="Biology">🧬 Biologie</option>
+      <option value="Computer Science">🖥️ Computer Science</option>
+      <option value="History">📜 Geschichte</option>
+    </select>
+
+   
+    <label>❓ Frage:</label>
+    <input type="text" id="questionText" placeholder="Z.B. Was ist 2+2?" required />
+
+   
+    <label>🔵 Option 1:</label>
+    <input type="text" id="opt1" required />
+    <label>🟠 Option 2:</label>
+    <input type="text" id="opt2" required />
+    <label>🟢 Option 3:</label>
+    <input type="text" id="opt3" required />
+    <label>🟣 Option 4:</label>
+    <input type="text" id="opt4" required />
+
+    
+    <label>✅ Richtige Antwort:</label>
+    <select id="correctAnswer" required>
+      <option value="">Bitte wählen...</option>
+      <option value="0">Option 1</option>
+      <option value="1">Option 2</option>
+      <option value="2">Option 3</option>
+      <option value="3">Option 4</option>
+    </select>
+
+    <button type="button" onclick="addAnotherQuestion()">➕ Andere Frage</button>
+    <button type="button" onclick="finishQuiz()">🎉 Speichern</button>
+  </form>
+
+  <script src="../scripts/multiple_choice_quiz.js"></script>
+</body>
+</html>

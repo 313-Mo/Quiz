@@ -1,0 +1,58 @@
+image: maven:3.9.6-eclipse-temurin-21
+
+services:
+  - docker:dind
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+default:
+  before_script:
+    - cd server/QuizMaster
+
+stages:
+  - install
+  - test
+  - build
+  - package
+  - deploy
+  - clean
+
+install:
+  stage: install
+  script:
+    - mvn install -DskipTests
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+build:
+  stage: build
+  script:
+    - mvn compile
+
+package:
+  stage: package
+  script:
+    - mvn package
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script: []
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG server/
+    - docker push $IMAGE_TAG
+
+clean:
+  stage: clean
+  script:
+    - mvn clean

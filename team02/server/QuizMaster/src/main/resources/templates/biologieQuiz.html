@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster - Biologie Comic</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <link rel="stylesheet" href="../styles/biologieQuiz.css" />
+</head>
+<body>
+<div class="quiz-container">
+  <h1 class="text-3xl font-bangers text-center mb-4">QuizMaster – Biologie Comic</h1>
+
+  <div class="flex justify-between items-center mb-4">
+    <div class="text-sm">
+      <span>Level:</span> <span id="level">1</span>
+    </div>
+    <div class="flex" id="hearts">
+      <i class="fas fa-heart heart"></i>
+      <i class="fas fa-heart heart"></i>
+      <i class="fas fa-heart heart"></i>
+    </div>
+    <div class="text-sm">
+      <span id="timer">30</span>s
+    </div>
+  </div>
+
+  <div class="w-full bg-gray-200 rounded-full mb-4">
+    <div id="timer-bar" class="timer-bar w-full"></div>
+  </div>
+
+  <div class="mb-4">
+    <h2 id="question" class="text-xl font-bold">Frage wird geladen...</h2>
+  </div>
+
+  
+  <div id="answers" class="flex flex-col items-center space-y-4 mb-4"></div>
+
+  
+  <div id="true-false-buttons" class="flex justify-center space-x-4 mb-4 hidden">
+    <button id="trueBtn" class="btn-primary">✅ Wahr</button>
+    <button id="falseBtn" class="btn-primary">❌ Falsch</button>
+  </div>
+
+  <div class="text-center">
+    <button id="nextBtn" class="btn-primary">Nächste Frage</button>
+    <button onclick="goToHome()" class="quiz-btn">🏠 Zur Startseite</button>
+    <button onclick="restartQuiz()" class="quiz-btn">🔁 Test wiederholen</button>
+  </div>
+</div>
+
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const questions = /*[[${questions}]]*/ [];
+  /*]]>*/
+</script>
+
+
+<script type="module" src="../scripts/Quizmanager.js"></script>
+<script type="module" src="../scripts/biologieQuiz.js"></script>
+</body>
+</html>

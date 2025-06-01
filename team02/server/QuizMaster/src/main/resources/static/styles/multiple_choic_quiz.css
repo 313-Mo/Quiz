@@ -1,0 +1,86 @@
+:root {
+  --primary: #34ace0;
+  --accent: #fddb92;
+  --highlight: #ff6f61;
+  --bg: linear-gradient(to right, var(--accent), #d1fdff);
+}
+
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+h1 {
+  color: var(--primary);
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+form {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 550px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  font-size: 18px;
+  color: #333;
+}
+
+input[type="text"], select {
+  padding: 12px;
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f9fcff;
+}
+
+.time-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.time-buttons button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.time-buttons button:hover,
+.time-buttons button.active {
+  background: var(--primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+button[type="submit"] {
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #227093;
+}
