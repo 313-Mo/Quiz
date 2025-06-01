@@ -1,13 +1,22 @@
 image: maven:3.9.6-eclipse-temurin-21
 
 services:
-  - docker:dind
+  - name: postgres:15
+    alias: db
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+  POSTGRES_DB: quizdb
+  POSTGRES_USER: quizmaster
+  POSTGRES_PASSWORD: passwort
+  SPRING_PROFILES_ACTIVE: test
+  SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/quizdb
+  SPRING_DATASOURCE_USERNAME: quizmaster
+  SPRING_DATASOURCE_PASSWORD: passwort
 
 default:
   before_script:
@@ -29,7 +38,7 @@ install:
 test:
   stage: test
   script:
-    - mvn test
+    - mvn verify
 
 build:
   stage: build

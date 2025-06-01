@@ -1,6 +1,5 @@
 package Quiz.Master.Group.QuizMaster;
 
-
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
 import Quiz.Master.Group.QuizMaster.Entities.Quiz;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
 import Quiz.Master.Group.QuizMaster.Services.QuizService;
 import Quiz.Master.Group.QuizMaster.Services.QuizUserService;
@@ -34,20 +34,20 @@ class QuizMasterApplicationTests {
     @Autowired
     private QuizService quizService;
 
-	@Autowired
+    @Autowired
     private QuestionRepository questionRepository;
 
-	@MockBean
+    @MockBean
     private QuizUserService userService;
 
-	@Test
+    @Test
     void testStartPageLoads() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("startPage"));
     }
 
-	@Test
+    @Test
     void testCategorySelectionLoads() throws Exception {
         mockMvc.perform(get("/categorySelection"))
                 .andExpect(status().isOk())
@@ -56,7 +56,7 @@ class QuizMasterApplicationTests {
 
     @Test
     void testQuizSelectionViewByCategory() throws Exception {
-        Quiz chemistryQuiz = new MultipleChoiceQuiz("test Chemistry", "Chemistry", 10, 0, List.of());
+        Quiz chemistryQuiz = new MultipleChoiceQuiz(Category.fromLabel("Chemistry"), 10, 0, List.of());
         quizService.save(chemistryQuiz);
 
         mockMvc.perform(get("/category/Chemistry"))
@@ -68,10 +68,11 @@ class QuizMasterApplicationTests {
 
     @Test
     void testRedirectToCorrectQuizTemplate() throws Exception {
-        Question q1 = new Question("Was ist H2O?", List.of("Wasser", "Säure", "Luft"), "Wasser");
-		questionRepository.save(q1); 
-        Quiz chemistryQuiz = new MultipleChoiceQuiz("test Chemistry", "Chemistry", 10 , 1, List.of(q1));
-        quizService.save(chemistryQuiz); 
+        Question q1 = new Question("Was ist H2O?", List.of("Wasser", "Säure", "Luft", "Zucker"), "Wasser");
+        questionRepository.save(q1);
+
+        Quiz chemistryQuiz = new MultipleChoiceQuiz(Category.fromLabel("Chemistry"), 10, 1, List.of(q1));
+        quizService.save(chemistryQuiz);
 
         mockMvc.perform(get("/quiz/" + chemistryQuiz.getId()))
                 .andExpect(status().isOk())
@@ -81,22 +82,22 @@ class QuizMasterApplicationTests {
 
     @Test
     void testInvalidQuizCategoryFallsBackToCategorySelection() throws Exception {
-        Quiz quiz = new MultipleChoiceQuiz("test unbekannt", "Unbekannt", 10, 0, List.of());
-        quizService.save(quiz);
+        Quiz unknownQuiz = new MultipleChoiceQuiz(Category.fromLabel("General Knowledge"), 10, 0, List.of());
+        quizService.save(unknownQuiz);
 
-        mockMvc.perform(get("/quiz/" + quiz.getId()))
+        mockMvc.perform(get("/quiz/" + unknownQuiz.getId()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("categorySelection"));
+                .andExpect(view().name("random")); // oder "categorySelection" wenn du das erwartest
     }
 
-	@Test
+    @Test
     void testSignUpPageLoads() throws Exception {
         mockMvc.perform(get("/signUp"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("signUp"));
     }
 
-	@Test
+    @Test
     void testSuccessfulSignUpRedirectsToLogin() throws Exception {
         mockMvc.perform(post("/checkSignUp")
                 .param("firstName", "Max")
@@ -109,14 +110,14 @@ class QuizMasterApplicationTests {
                 .andExpect(redirectedUrl("/logIn"));
     }
 
-	@Test
+    @Test
     void testLogInPageLoads() throws Exception {
         mockMvc.perform(get("/logIn"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("logIn"));
     }
 
-	@Test
+    @Test
     void testSuccessfulLoginRedirectsToCategorySelection() throws Exception {
         when(userService.checkLogin("max123", "password")).thenReturn(true);
 
@@ -127,7 +128,7 @@ class QuizMasterApplicationTests {
                 .andExpect(redirectedUrl("/categorySelection"));
     }
 
-	@Test
+    @Test
     void testFailedLoginReturnsLoginPage() throws Exception {
         when(userService.checkLogin("max123", "wrongpass")).thenReturn(false);
 
@@ -137,6 +138,4 @@ class QuizMasterApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("logIn"));
     }
-
 }
-

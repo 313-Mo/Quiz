@@ -1,13 +1,11 @@
 package Quiz.Master.Group.QuizMaster.Services;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Entities.Quiz;
-import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
+import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
 @Service
 public class QuizService {
@@ -20,7 +18,8 @@ public class QuizService {
       this.questionRepository = questionRepository;
    }
 
-   public List<Quiz> findByCategory(String category) {
+   public List<Quiz> findByCategory(Category category) {
+      
       return quizRepository.findByCategory(category);
    }
 
