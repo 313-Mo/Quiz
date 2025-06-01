@@ -56,7 +56,7 @@ class QuizMasterApplicationTests {
 
     @Test
     void testQuizSelectionViewByCategory() throws Exception {
-        Quiz chemistryQuiz = new MultipleChoiceQuiz("test Chemistry", "Chemistry", 10, 0, List.of());
+        Quiz chemistryQuiz = new MultipleChoiceQuiz("Chemistry", 10, 0, List.of());
         quizService.save(chemistryQuiz);
 
         mockMvc.perform(get("/category/Chemistry"))
@@ -70,7 +70,7 @@ class QuizMasterApplicationTests {
     void testRedirectToCorrectQuizTemplate() throws Exception {
         Question q1 = new Question("Was ist H2O?", List.of("Wasser", "Säure", "Luft"), "Wasser");
 		questionRepository.save(q1); 
-        Quiz chemistryQuiz = new MultipleChoiceQuiz("test Chemistry", "Chemistry", 10 , 1, List.of(q1));
+        Quiz chemistryQuiz = new MultipleChoiceQuiz("Chemistry", 10 , 1, List.of(q1));
         quizService.save(chemistryQuiz); 
 
         mockMvc.perform(get("/quiz/" + chemistryQuiz.getId()))
@@ -81,7 +81,7 @@ class QuizMasterApplicationTests {
 
     @Test
     void testInvalidQuizCategoryFallsBackToCategorySelection() throws Exception {
-        Quiz quiz = new MultipleChoiceQuiz("test unbekannt", "Unbekannt", 10, 0, List.of());
+        Quiz quiz = new MultipleChoiceQuiz("Unbekannt", 10, 0, List.of());
         quizService.save(quiz);
 
         mockMvc.perform(get("/quiz/" + quiz.getId()))

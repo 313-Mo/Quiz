@@ -2,15 +2,12 @@ package Quiz.Master.Group.QuizMaster.Controller;
 
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
-import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
 import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,66 +21,74 @@ public class MultipleChoicQuizErstellenController {
     @Autowired
     private QuestionRepository questionRepository;
 
+    private static final List<Question> tempQuestionList = new ArrayList<>();
+    private static String tempCategory = "";
+    private static int tempSelectedTime = 0;
+
     @GetMapping("/add-quiz")
     public String showAddQuizPage(org.springframework.ui.Model model) {
         model.addAttribute("quiz", new MultipleChoiceQuiz());
         return "multiple_choice_quiz";
     }
-    @PostMapping("/add-quiz")
-    public String handleQuizSubmission(
-        @RequestParam("name") String name,
-        @RequestParam("category") String category,
-        @RequestParam("selectedTime") int selectedTime,
-        @RequestParam("question") String questionText,
-        @RequestParam("option1") String option1,
-        @RequestParam("option2") String option2,
-        @RequestParam("option3") String option3,
-        @RequestParam("option4") String option4,
-        @RequestParam("correct-answer") String correctAnswerKey) {
-    
-    List<String> options = List.of(option1, option2, option3, option4);
-    String correctAnswer = switch (correctAnswerKey) {
-        case "option1" -> option1;
-        case "option2" -> option2;
-        case "option3" -> option3;
-        case "option4" -> option4;
-        default -> null;
-    };
 
-    if (correctAnswer == null) {
-    throw new IllegalArgumentException("Ungültige Auswahl für die richtige Antwort");
+    @PostMapping("/add-mc-question")
+    @ResponseBody
+    public String addQuestion(
+            @RequestParam("category") String category,
+            @RequestParam("selectedTime") int selectedTime,
+            @RequestParam("question") String questionText,
+            @RequestParam("option1") String option1,
+            @RequestParam("option2") String option2,
+            @RequestParam("option3") String option3,
+            @RequestParam("option4") String option4,
+            @RequestParam("correct-answer") String correctAnswerKey) {
+
+        if (!category.equals(tempCategory) || selectedTime != tempSelectedTime) {
+            tempCategory = category;
+            tempSelectedTime = selectedTime;
+            tempQuestionList.clear();
+        }
+
+        List<String> options = List.of(option1, option2, option3, option4);
+        String correctAnswer = switch (correctAnswerKey) {
+            case "option1" -> option1;
+            case "option2" -> option2;
+            case "option3" -> option3;
+            case "option4" -> option4;
+            default -> null;
+        };
+
+        if (correctAnswer == null) {
+            return "Ungültige Antwort";
+        }
+
+        Question question = new Question(questionText, options, correctAnswer);
+        tempQuestionList.add(question);
+
+        return "Frage gespeichert";
     }
 
+    @PostMapping("/finalize-mc-quiz")
+    @ResponseBody
+    public String finalizeQuiz(
+            @RequestParam("category") String category,
+            @RequestParam("selectedTime") int selectedTime) {
 
-    Question question = new Question(questionText, options, correctAnswer);
+        if (tempQuestionList.isEmpty()) {
+            return "Keine Fragen zum Speichern";
+        }
 
-    //Hier fehlt die Logik für die Speicherung mehrerer Fragen in einem Quiz
-    /* 
-    List<Quiz> quizzes = muChoQuizRepository.findByCategory(category);
+        MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(category, selectedTime, tempQuestionList.size(), new ArrayList<>(tempQuestionList));
 
-    MultipleChoiceQuiz quiz;
-    
-    if (quizzes.isEmpty() || !((quizzes.get(0)) instanceof MultipleChoiceQuiz)) {
-        quiz = new MultipleChoiceQuiz(category, selectedTime, 0, new ArrayList<>());
-    }   
-    else {
-        quiz = (MultipleChoiceQuiz) quizzes.get(0);
+        for (Question q : tempQuestionList) {
+            questionRepository.save(q);
+        }
+        muChoQuizRepository.save(quiz);
+
+        tempQuestionList.clear();
+        tempCategory = "";
+        tempSelectedTime = 0;
+
+        return "Quiz erfolgreich gespeichert";
     }
-
-    quiz.getQuestionList().add(question);
-    quiz.setNumberOfQuestions(quiz.getQuestionList().size());
-
-    */
-
-    // Für jede erstellte Frage wird, im Moment, ein neues Quiz erstellt
-    List<Question> questionList = new ArrayList<>();
-    questionList.add(question);
-    MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(name, category, selectedTime, 1, questionList);
-
-    questionRepository.save(question);
-    muChoQuizRepository.save(quiz);
-    return "redirect:/add-quiz";
-}
-
-
 }

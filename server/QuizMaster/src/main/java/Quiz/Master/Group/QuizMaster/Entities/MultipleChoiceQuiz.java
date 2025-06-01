@@ -15,8 +15,8 @@ public class MultipleChoiceQuiz extends Quiz {
         super();
     }
 
-    public MultipleChoiceQuiz(String name, String category, int timeLimit, int numberOfQuestions, List<Question> questionList) {
-        super(name, category, timeLimit, numberOfQuestions);
+    public MultipleChoiceQuiz(String category, int timeLimit, int numberOfQuestions, List<Question> questionList) {
+        super(category, timeLimit, numberOfQuestions);
         this.questionList = questionList;
     }
 

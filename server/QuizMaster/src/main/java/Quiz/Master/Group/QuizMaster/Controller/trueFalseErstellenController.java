@@ -6,11 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 
@@ -20,45 +17,48 @@ public class trueFalseErstellenController {
     @Autowired
     private QuizRepository trFlQuizRepository;
 
+    private static final List<String> tempQuestionList = new ArrayList<>();
+    private static final List<Boolean> tempAnswerList = new ArrayList<>();
+
     @GetMapping("/add-truefalse-quiz")
     public String showTrueFalseQuizForm(Model model) {
         model.addAttribute("quiz", new TrueFalseQuiz());
         return "true_false_quiz";
     }
 
-    @PostMapping("/add-truefalse-quiz")
-    public String handleTrueFalseSubmission(
-            @RequestParam("name") String name,
-            @RequestParam("category") String category,
-            @RequestParam("selectedTime") int selectedTime,
-            @RequestParam("question") String questionText,
-            @RequestParam("answer") boolean answerValue) {
-        
-        //Hier fehlt die Logik für die Speicherung mehrerer Fragen in einem Quiz
-        /* 
-        List<Quiz> quizzes = trFlQuizRepository.findByCategory(category);
+    @PostMapping("/add-tf-question")
+    @ResponseBody
+    public String addTFQuestion(
+            @RequestParam("question") String question,
+            @RequestParam("answer") boolean answer
+    ) {
+        tempQuestionList.add(question);
+        tempAnswerList.add(answer);
+        return "Frage gespeichert";
+    }
 
-        TrueFalseQuiz quiz;
-        if (quizzes.isEmpty()) {
-            quiz = new TrueFalseQuiz(category, selectedTime, 1, new ArrayList<>(), new ArrayList<>());
-        } else {
-            quiz = (TrueFalseQuiz) quizzes.get(0);
+    @PostMapping("/finalize-truefalse-quiz")
+    @ResponseBody
+    public String finalizeTFQuiz(
+            @RequestParam("category") String category,
+            @RequestParam("selectedTime") int selectedTime
+    ) {
+        if (tempQuestionList.isEmpty()) {
+            return "Keine Fragen vorhanden";
         }
 
-        quiz.getQuestionList().add(questionText);
-        quiz.getAnswerList().add(answerValue);
-        quiz.setNumberOfQuestions(quiz.getQuestionList().size());
-        */
+        TrueFalseQuiz quiz = new TrueFalseQuiz(
+                category,
+                selectedTime,
+                tempQuestionList.size(),
+                new ArrayList<>(tempQuestionList),
+                new ArrayList<>(tempAnswerList)
+        );
 
-        // Für jede erstellte Frage wird, im Moment, ein neues Quiz erstellt
-        List<String> questionList = new ArrayList<>();
-        questionList.add(questionText);
-
-        List<Boolean> answersList = new ArrayList<>();
-        answersList.add(answerValue);
-
-        TrueFalseQuiz quiz = new TrueFalseQuiz(name, category, selectedTime, 1, questionList, answersList);
         trFlQuizRepository.save(quiz);
-        return "redirect:/add-truefalse-quiz";
+        tempQuestionList.clear();
+        tempAnswerList.clear();
+
+        return "Quiz erfolgreich gespeichert";
     }
 }
