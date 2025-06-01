@@ -8,13 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import Quiz.Master.Group.QuizMaster.Entities.Category;
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
 import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Services.QuizService;
-
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 
 
 @Controller
@@ -126,24 +125,23 @@ public class QuizController {
             model.addAttribute("questions", questions);
         }
         
-        String category = quiz.getCategory(); 
+        Category category = quiz.getCategory(); 
          switch (category) {
-            case CATEGORY_BIOLOGY:
-            return VIEW_BIOLOGIE_QUIZ;
-
-            case CATEGORY_MATHEMATICS:
+            case BIOLOGY:
+                return VIEW_BIOLOGIE_QUIZ;
+            case MATH:
                 return VIEW_MATHE_QUIZ; 
-            case CATEGORY_FINANCE:
+            case FINANCE:
                 return VIEW_FINANZ_QUIZ;
-            case CATEGORY_CHEMISTRY:
+            case CHEMISTRY:
                 return VIEW_CHEMISTRY; 
-            case CATEGORY_GEOGRAPHY:
+            case GEOGRAPHY:
                 return VIEW_GEO; 
-            case CATEGORY_HISTORY:
+            case HISTORY:
                 return VIEW_HISTORY; 
-            case CATEGORY_COMPUTER_SCIENCE:
+            case COMPUTER_SCIENCE:
                 return VIEW_COMPUTER_SCIENCE; 
-            case CATEGORY_GENERAL:
+            case RANDOM:
                 return VIEW_RANDOM;
             default:
                 return VIEW_CATEGORY_SELECTION;

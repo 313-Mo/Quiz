@@ -23,7 +23,6 @@ public abstract class Quiz {
     protected int numberOfQuestions;
 
     protected Quiz() {
-        this.name = null;
         this.category = null;
         this.timeLimit = 0;
         this.numberOfQuestions = 0;
