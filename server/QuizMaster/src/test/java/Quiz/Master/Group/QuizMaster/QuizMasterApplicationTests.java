@@ -139,7 +139,3 @@ class QuizMasterApplicationTests {
                 .andExpect(view().name("logIn"));
     }
 }
-// Note: This test class assumes that the necessary beans and configurations are set up in your Spring context.
-// The tests cover the main functionalities of the application, including loading pages, handling quiz selections, and user authentication.
-// Make sure to adjust the test cases according to your actual application structure and requirements.
-// The test cases are designed to ensure that the application behaves as expected when interacting with the quiz functionalities and user authentication.
