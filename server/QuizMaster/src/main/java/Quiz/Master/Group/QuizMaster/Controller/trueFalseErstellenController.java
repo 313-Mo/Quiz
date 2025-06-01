@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 
 @Controller
 public class trueFalseErstellenController {
@@ -40,7 +41,7 @@ public class trueFalseErstellenController {
     @PostMapping("/finalize-truefalse-quiz")
     @ResponseBody
     public String finalizeTFQuiz(
-            @RequestParam("category") String category,
+            @RequestParam("category") Category category,
             @RequestParam("selectedTime") int selectedTime
     ) {
         if (tempQuestionList.isEmpty()) {

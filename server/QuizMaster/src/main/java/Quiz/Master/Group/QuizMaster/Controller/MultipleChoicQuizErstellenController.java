@@ -4,6 +4,7 @@ import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
 import Quiz.Master.Group.QuizMaster.Repositories.QuestionRepository;
 import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class MultipleChoicQuizErstellenController {
@@ -22,7 +24,7 @@ public class MultipleChoicQuizErstellenController {
     private QuestionRepository questionRepository;
 
     private static final List<Question> tempQuestionList = new ArrayList<>();
-    private static String tempCategory = "";
+    private static Category tempCategory;
     private static int tempSelectedTime = 0;
 
     @GetMapping("/add-quiz")
@@ -34,7 +36,7 @@ public class MultipleChoicQuizErstellenController {
     @PostMapping("/add-mc-question")
     @ResponseBody
     public String addQuestion(
-            @RequestParam("category") String category,
+            @RequestParam("category") Category category,
             @RequestParam("selectedTime") int selectedTime,
             @RequestParam("question") String questionText,
             @RequestParam("option1") String option1,
@@ -71,14 +73,15 @@ public class MultipleChoicQuizErstellenController {
     @PostMapping("/finalize-mc-quiz")
     @ResponseBody
     public String finalizeQuiz(
-            @RequestParam("category") String category,
+            @RequestParam("category") Category category,
             @RequestParam("selectedTime") int selectedTime) {
 
         if (tempQuestionList.isEmpty()) {
             return "Keine Fragen zum Speichern";
         }
 
-        MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(category, selectedTime, tempQuestionList.size(), new ArrayList<>(tempQuestionList));
+        MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(
+             category, selectedTime, tempQuestionList.size(), new ArrayList<>(tempQuestionList));
 
         for (Question q : tempQuestionList) {
             questionRepository.save(q);
@@ -86,7 +89,6 @@ public class MultipleChoicQuizErstellenController {
         muChoQuizRepository.save(quiz);
 
         tempQuestionList.clear();
-        tempCategory = "";
         tempSelectedTime = 0;
 
         return "Quiz erfolgreich gespeichert";

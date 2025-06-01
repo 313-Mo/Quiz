@@ -1,10 +1,19 @@
 package Quiz.Master.Group.QuizMaster.Controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import Quiz.Master.Group.QuizMaster.Entities.MultipleChoiceQuiz;
 import Quiz.Master.Group.QuizMaster.Entities.Question;
 import Quiz.Master.Group.QuizMaster.Entities.Quiz;
 import Quiz.Master.Group.QuizMaster.Entities.TrueFalseQuiz;
 import Quiz.Master.Group.QuizMaster.Services.QuizService;
+import Quiz.Master.Group.QuizMaster.Entities.Category;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,55 +38,58 @@ public class QuizController {
 
     @GetMapping("/shareQuiz")
     public String showShareQuizPage() {
-        return "shareQuiz";
+        return VIEW_SHARE_QUIZ; 
     }
 
     @GetMapping("/selectQuiz")
     public String showSelectQuizPage() {
-        return "selectQuiz";
+        return VIEW_SELECT_QUIZ; 
     }
 
     @GetMapping("/BiologieQuiz")
     public String BiologieQuiz() {
-        return "biologieQuiz";
+        return VIEW_BIOLOGIE_QUIZ; 
     }
 
     @GetMapping("/MatheQuiz")
     public String MatheQuiz() {
-        return "matheQuiz";
+        return VIEW_MATHE_QUIZ; 
     }
 
     @GetMapping("/FinanzQuiz")
     public String FinanzQuiz() {
-        return "finanzQuiz";
+        return VIEW_FINANZ_QUIZ; 
     }
 
     @GetMapping("/ChemieQuiz")
     public String ChemieQuiz() {
-        return "chemistry";
+        return VIEW_CHEMISTRY; 
     }
 
     @GetMapping("/GeoQuiz")
     public String GeoQuiz() {
-        return "geography";
+        return VIEW_GEO; 
     }
 
     @GetMapping("/GeschichtsQuiz")
     public String GeschichtsQuiz() {
-        return "history";
+        return VIEW_HISTORY; 
     }
 
     @GetMapping("/InformatikQuiz")
     public String InformatikQuiz() {
-        return "computerScience";
+        return VIEW_COMPUTER_SCIENCE; 
     }
 
     @GetMapping("/category/{name}")
     public String showQuizzesByCategory(@PathVariable String name, Model model) {
-        List<Quiz> quizzes = quizService.findByCategory(name);
-        model.addAttribute("category", name);
+        //  Fehler 1 behoben: String → Category
+        Category category = Category.fromLabel(name);
+        List<Quiz> quizzes = quizService.findByCategory(category);
+
+        model.addAttribute("category", category.getLabel()); // ❗ für Thymeleaf etc.
         model.addAttribute("quizzes", quizzes);
-        return "quizSelection";
+        return VIEW_QUIZ_SELECTION;
     }
 
     @GetMapping("/quiz/{id}")
@@ -103,27 +115,30 @@ public class QuizController {
 
             model.addAttribute("questions", combined);
         }
-
-        String category = quiz.getCategory();
-        switch (category) {
-            case "Biology":
-                return "biologieQuiz";
-            case "Mathematics":
-                return "matheQuiz";
-            case "Finance":
-                return "finanzQuiz";
-            case "Chemistry":
-                return "chemistry";
-            case "Geography":
-                return "geography";
-            case "History":
-                return "history";
-            case "Computer Science":
-                return "computerScience";
-            case "General Knowledge":
-                return "random";
+        
+        Category category = quiz.getCategory(); 
+         switch (category) {
+            case BIOLOGY:
+                return VIEW_BIOLOGIE_QUIZ;
+            case MATH:
+                return VIEW_MATHE_QUIZ; 
+            case FINANCE:
+                return VIEW_FINANZ_QUIZ;
+            case CHEMISTRY:
+                return VIEW_CHEMISTRY; 
+            case GEOGRAPHY:
+                return VIEW_GEO; 
+            case HISTORY:
+                return VIEW_HISTORY; 
+            case COMPUTER_SCIENCE:
+                return VIEW_COMPUTER_SCIENCE; 
+            case RANDOM:
+                return VIEW_RANDOM;
             default:
-                return "categorySelection";
+                return VIEW_CATEGORY_SELECTION;
         }
     }
 }
+// End of QuizController.java
+        
+        

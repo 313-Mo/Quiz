@@ -18,7 +18,7 @@ public class TrueFalseQuiz extends Quiz {
         super();
     }
 
-    public TrueFalseQuiz(String category, int timeLimit, int numberOfQuestions, List<String> questionList, List<Boolean> answerList) {
+    public TrueFalseQuiz(Category category, int timeLimit, int numberOfQuestions, List<String> questionList, List<Boolean> answerList) {
         super(category, timeLimit, numberOfQuestions);
         this.questionList = questionList;
         this.answerList = answerList;
