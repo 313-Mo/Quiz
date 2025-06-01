@@ -17,13 +17,23 @@ import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 @Controller
 public class trueFalseErstellenController {
 
+    private static final String VIEW_TRUE_FALSE_QUIZ = "true_false_quiz";
+
+
+    private static final String REDIRECT_TRUE_FALSE_QUIZ = "redirect:/add-truefalse-quiz";
+    
+    private static final int DEFAULT_QUIZ_VERSION = 1;
+
+
+
+
     @Autowired
     private QuizRepository trFlQuizRepository;
 
     @GetMapping("/add-truefalse-quiz")
     public String showTrueFalseQuizForm(Model model) {
         model.addAttribute("quiz", new TrueFalseQuiz());
-        return "true_false_quiz";
+        return VIEW_TRUE_FALSE_QUIZ;
     }
 
     @PostMapping("/add-truefalse-quiz")
@@ -57,8 +67,8 @@ public class trueFalseErstellenController {
         List<Boolean> answersList = new ArrayList<>();
         answersList.add(answerValue);
 
-        TrueFalseQuiz quiz = new TrueFalseQuiz(category, selectedTime, 1, questionList, answersList);
+        TrueFalseQuiz quiz = new TrueFalseQuiz(name, category, selectedTime, DEFAULT_QUIZ_VERSION , questionList, answersList);
         trFlQuizRepository.save(quiz);
-        return "redirect:/add-truefalse-quiz";
+        return REDIRECT_TRUE_FALSE_QUIZ;
     }
 }

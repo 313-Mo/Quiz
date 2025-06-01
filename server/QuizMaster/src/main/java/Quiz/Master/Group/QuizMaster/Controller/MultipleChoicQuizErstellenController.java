@@ -18,6 +18,17 @@ import Quiz.Master.Group.QuizMaster.Repositories.QuizRepository;
 @Controller
 public class MultipleChoicQuizErstellenController {
 
+    private static final String VIEW_MULTIPLE_CHOICE_QUIZ = "multiple_choice_quiz";
+    private static final String REDIRECT_ADD_QUIZ = "redirect:/add-quiz";
+
+    private static final String Option_1 = "option1";
+    private static final String Option_2 = "option2";
+    private static final String Option_3 = "option3";
+    private static final String Option_4 = "option4";
+
+    private static final int DEFAULT_QUIZ_VERSION = 1;
+
+
     @Autowired
     private QuizRepository muChoQuizRepository;
 
@@ -27,7 +38,7 @@ public class MultipleChoicQuizErstellenController {
     @GetMapping("/add-quiz")
     public String showAddQuizPage(org.springframework.ui.Model model) {
         model.addAttribute("quiz", new MultipleChoiceQuiz());
-        return "multiple_choice_quiz";
+        return VIEW_MULTIPLE_CHOICE_QUIZ;
     }
     @PostMapping("/add-quiz")
     public String handleQuizSubmission(
@@ -42,10 +53,10 @@ public class MultipleChoicQuizErstellenController {
     
     List<String> options = List.of(option1, option2, option3, option4);
     String correctAnswer = switch (correctAnswerKey) {
-        case "option1" -> option1;
-        case "option2" -> option2;
-        case "option3" -> option3;
-        case "option4" -> option4;
+        case Option_1 -> option1;
+        case Option_2 -> option2;
+        case Option_3 -> option3;
+        case Option_4 -> option4;
         default -> null;
     };
 
@@ -79,11 +90,11 @@ public class MultipleChoicQuizErstellenController {
 
     List<Question> questionList = new ArrayList<>();
     questionList.add(question);
-    MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(category, selectedTime, 1, questionList);
+    MultipleChoiceQuiz quiz = new MultipleChoiceQuiz(name, category, selectedTime, DEFAULT_QUIZ_VERSION, questionList);
 
     questionRepository.save(question);
     muChoQuizRepository.save(quiz);
-    return "redirect:/add-quiz";
+    return REDIRECT_ADD_QUIZ;
 }
 
 
