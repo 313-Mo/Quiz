@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz löschen</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/deleteQuiz.css"/>
+
+</head>
+<body class="bg-gray-50 p-8">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-2xl font-bold mb-4 text-center">🗑️ Quiz löschen</h1>
+
+    <form method="post" action="/deleteQuiz">
+      <label for="quizId" class="block mb-2 font-semibold">Quiz auswählen:</label>
+      <select name="quizId" id="quizId" required class="w-full p-2 border rounded mb-4">
+        <option value="" disabled selected>-- Quiz auswählen --</option>
+        <option th:each="quiz : ${quizzes}"
+                th:value="${quiz.id}"
+                th:text="${quiz.name + ' - ' + quiz.category}">
+        </option>
+      </select>
+
+      <button type="submit" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition">
+        Quiz löschen
+      </button>
+    </form>
+  </div>
+  <script type="module" src="../scripts/deleteQuiz.js"></script>
+</body>
+</html>
