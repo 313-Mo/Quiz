@@ -17,7 +17,7 @@
 <div class="categories">
   <form th:each="quiz : ${quizzes}" th:action="@{'/quiz/' + ${quiz.id}}" method="GET">
     <button class="category-button" type="submit" style="background:#576574;">
-        <span th:text="${quiz.name}"></span>
+        <span th:text="${quiz.id}"></span>
       📘<br><br>Sample Quiz
     </button>
   </form>
