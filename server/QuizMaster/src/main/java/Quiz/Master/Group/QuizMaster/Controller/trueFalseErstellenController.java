@@ -66,7 +66,7 @@ public class trueFalseErstellenController {
         List<Boolean> answersList = new ArrayList<>();
         answersList.add(answerValue);
 
-        TrueFalseQuiz quiz = new TrueFalseQuiz(category, selectedTime, DEFAULT_QUIZ_VERSION , questionList, answersList);
+        TrueFalseQuiz quiz = new TrueFalseQuiz(name, category, selectedTime, DEFAULT_QUIZ_VERSION , questionList, answersList);
         trFlQuizRepository.save(quiz);
         return REDIRECT_TRUE_FALSE_QUIZ;
     }
