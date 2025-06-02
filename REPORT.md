@@ -56,3 +56,7 @@ n diesem Sprint habe ich versucht, HTML, CSS und JavaScript zu trennen. Außerde
 ### Reflection Team Member 1: Mohammad
 In diesem Sprint konnte ich meine Tickets gut umsetzen. Die Kommunikation mit meinem Team war sehr hilfreich, insbesondere beim Austausch über offene Fragen und Lösungsansätze. Während der Bearbeitung einiger Tickets ist mir aufgefallen, dass teilweise noch Dateien oder Informationen fehlen. Diese könnten in zukünftigen Sprints als eigene Tickets erfasst werden. Außerdem habe ich gemerkt, dass es sinnvoll wäre, größere Tickets in kleinere, übersichtlichere Teilaufgaben zu unterteilen. So behält man den Überblick besser und kann gezielter auf die einzelnen Anforderungen eingehen.
 
+# Report for 02.06.2025
+### Reflection Team Member 1: Oskar
+In diesem Sprint habe ich ein Intregrationstest in der Pipeline zum laufen gebracht. Ich habe ein simples Feedback-System eingebaut, sodass zukünftig Quiz bewertet werden können. Im Moment kann man nur allgemeines Feedback schreiben, das noch keinem User oder Quiz zugeordnet ist. Außerdem habe ich den Quiz ein Namen hinzugefügt, der auch bei der Quiz-Auswahl erscheint und beim Erstellen von Quiz gewählt werden kann. Dieses Feature läuft leider noch nicht in Main. Ich habe mit Mohammed sehr lange gebraucht, um die Feature-Branches in Main zu vereinigen, wobei meine Addition der Namen entfallen ist. 
+
