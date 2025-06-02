@@ -60,3 +60,9 @@ In diesem Sprint konnte ich meine Tickets gut umsetzen. Die Kommunikation mit me
 ### Reflection Team Member 1: Oskar
 In diesem Sprint habe ich ein Intregrationstest in der Pipeline zum laufen gebracht. Ich habe ein simples Feedback-System eingebaut, sodass zukünftig Quiz bewertet werden können. Im Moment kann man nur allgemeines Feedback schreiben, das noch keinem User oder Quiz zugeordnet ist. Außerdem habe ich den Quiz ein Namen hinzugefügt, der auch bei der Quiz-Auswahl erscheint und beim Erstellen von Quiz gewählt werden kann. Dieses Feature läuft leider noch nicht in Main. Ich habe mit Mohammed sehr lange gebraucht, um die Feature-Branches in Main zu vereinigen, wobei meine Addition der Namen entfallen ist. 
 
+### Reflection Team Member 2: Mohammad
+In diesem Sprint habe ich versucht die Controller anzupassen, damit sie keine magical Strings und naumbers beinhalten und habe eine neuen Feature eingebaut, wo die Nutzende die erstellten Quizzes löschen können. Und am End habe ich und Oskar viel Zeit mit Reviw verbracht, da wir den ganzen Tickets/ Branches angucken mussten. Die Merge-Konflikte haben haben auch viel Zeit im Ansproch genommen, wo Oskar und ich die versucht haben zu beheben. 
+
+
+
+
