@@ -1,3 +1,9 @@
+function toEnum(value) {
+  return value
+    .toUpperCase()
+    .replace(/\s+/g, "_"); 
+}
+
 function selectTime(button, minutes) {
   document.getElementById('selectedTime').value = minutes;
   document.querySelectorAll('.time-buttons button').forEach(btn => btn.classList.remove('active'));
@@ -5,7 +11,8 @@ function selectTime(button, minutes) {
 }
 
 function addAnotherQuestion() {
-  const category = document.getElementById("quizCategory").value;
+  const rawCategory = document.getElementById("quizCategory").value;
+  const category = toEnum(rawCategory); // umwandeln für Enum
   const selectedTime = document.getElementById("selectedTime").value;
   const questionText = document.getElementById("questionText").value.trim();
   const options = [
@@ -16,7 +23,7 @@ function addAnotherQuestion() {
   ];
   const correctAnswerIndex = document.getElementById("correctAnswer").value;
 
-  if (!category || !selectedTime || !questionText || options.includes("") || correctAnswerIndex === "") {
+  if (!rawCategory || !selectedTime || !questionText || options.includes("") || correctAnswerIndex === "") {
     alert("Bitte alle Felder ausfüllen!");
     return;
   }
@@ -48,10 +55,11 @@ function addAnotherQuestion() {
 }
 
 function finishQuiz() {
-  const category = document.getElementById("quizCategory").value;
+  const rawCategory = document.getElementById("quizCategory").value;
+  const category = toEnum(rawCategory); // umwandeln für Enum
   const selectedTime = document.getElementById("selectedTime").value;
 
-  if (!category || !selectedTime) {
+  if (!rawCategory || !selectedTime) {
     alert("Bitte alle Felder ausfüllen!");
     return;
   }
@@ -67,6 +75,6 @@ function finishQuiz() {
   .then(res => res.text())
   .then(msg => {
     alert(msg);
-    window.location.href = "/category/" + category.toLowerCase();
+    window.location.href = "/category/" + rawCategory.toLowerCase().replace(/\s+/g, "-");
   });
 }
