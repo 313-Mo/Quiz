@@ -12,23 +12,23 @@
 <div class="cloud-top"></div>
 
 
-<h1 id="main-title" th:text="'Quizzes in ' + ${category}"></h1>
+<h1 id="main-title" th:text="'Quizze im ' + ${category}"></h1>
 
 <div class="categories">
   <form th:each="quiz : ${quizzes}" th:action="@{'/quiz/' + ${quiz.id}}" method="GET">
     <button class="category-button" type="submit" style="background:#576574;">
         <span th:text="${quiz.id}"></span>
-      📘<br><br>Sample Quiz
+      📘<br><br>Neu Quize
     </button>
   </form>
 </div>
 
 <div class="quiz-actions">
   <a href="/rateQuiz" class="add-button" style="margin-bottom: 12rem;">➕ Feedback</a><br>
-  <a href="/selectQuiz" class="add-button" style="margin-bottom: 4rem;">➕ Add New Quiz</a><br>
+  <a href="/selectQuiz" class="add-button" style="margin-bottom: 4rem;">➕ Neues Quiz hinzufügen</a><br>
   <a href="/deleteQuiz" class="add-button" style="margin-bottom: 8rem;">➖ Quiz löschen</a><br>
 
-  <a href="/shareQuiz" class="add-button">➕ Share Your Quiz</a>
+  <a href="/shareQuiz" class="add-button">➕ Teile dein Quiz</a>
 </div>
 </body>
 </html>
